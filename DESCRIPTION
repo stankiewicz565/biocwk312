@@ -1,16 +1,14 @@
-Package: BuildABiocWorkshop2020
-Title: Bioconductor Workshop Template and Github Actions
+Package: biocwk312
+Title: Workshop intro for Bioconductor 3.12.
 Version: 0.1.1
 Authors@R: 
-    person(given = "Sean",
-           family = "Davis",
+    person(given = "Vince",
+           family = "Carey",
            role = c("aut", "cre"),
-           email = "seandavi@gmail.com",
-           comment = c(ORCID = "your-orc-id-here"))
-Description: This package serves as a template for using github actions to 
-    prepare a Bioconductor Workshop package for use. In particular,
-    a pkgdown website and docker image are generated based on workflow 
-    settings. 
+           email = "stvjc@channing.harvard.edu",
+           comment = c(ORCID = "0000-0003-4046-0063"))
+Description: This package illustrates steps to produce the modules of the Bioconductor 3.12 workshop series
+    to be produced at Harvard Medical School. 
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
@@ -22,7 +20,7 @@ Suggests:
     knitr,
     rmarkdown,
     pkgdown
-URL: https://seandavi.github.io/BuildABiocWorkshop2020/
-BugReports: https://github.com/seandavi/BuildABiocWorkshop2020/issues/new/choose
+URL: https://vjcitn.github.io/biocwk312/
+BugReports: https://github.com/vjcitn/biocwk312/issues/new/choose
 VignetteBuilder: knitr
-DockerImage: seandavi/buildabiocworkshop2020:latest
+DockerImage: vjcitn/biocwk312:latest
