@@ -103,6 +103,8 @@ Some examples:
 suppressPackageStartupMessages({
   library(TnT)
   library(biocwk312)
+  library(BiocFileCache) # needed for TFutils
+  library(readxl) # needed for TFutils
 })
 ```
 

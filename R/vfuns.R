@@ -1,8 +1,15 @@
 tntData = function(x) slot(x, "Data")
 
+# several imports below are artificial owing to some gaps in TFutils namespace
+
 #' set TnT tooltip data using EnsDb metadata
+#' @import TnT 
 #' @importFrom ensembldb select
 #' @importFrom S4Vectors elementMetadata
+#' @importFrom readxl read_xlsx  
+#' @importFrom BiocFileCache bfcadd
+#' @import EnsDb.Hsapiens.v79
+#' @import GenomicRanges
 #' @param view a TnT TxTrack instance 
 #' @param ensobj an EnsDb instance
 #' @param cols2use character() vector with elements drawn from result of `columns(ensobj)`

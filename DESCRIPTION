@@ -26,7 +26,8 @@ Imports: TnT,
     ensembldb,
     EnsDb.Hsapiens.v79,
     S4Vectors, 
-    BiocFileCache
+    BiocFileCache,
+    readxl
 URL: https://vjcitn.github.io/biocwk312/
 BugReports: https://github.com/vjcitn/biocwk312/issues/new/choose
 VignetteBuilder: knitr
