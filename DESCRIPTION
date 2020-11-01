@@ -25,7 +25,8 @@ Imports: TnT,
     GenomicRanges,
     ensembldb,
     EnsDb.Hsapiens.v79,
-    S4Vectors
+    S4Vectors, 
+    BiocFileCache
 URL: https://vjcitn.github.io/biocwk312/
 BugReports: https://github.com/vjcitn/biocwk312/issues/new/choose
 VignetteBuilder: knitr
