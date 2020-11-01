@@ -172,13 +172,17 @@ workshop to visualize GWAS hit locations in the context of
 transcripts.
 
 ```{r lkthe}
+# first setup transcripts
 trxview = TxTrackFromGRanges(biocwk312::txdata_near_ormdl3, 
       label = "Transcript\n Structure",
       color = "grey2",height = 300)
 trxview = reset_tooltip(trxview)
 trxview = reset_color(trxview)
 trxview = reset_display_label(trxview)
-TnTGenome(trxview)
+# second setup GWAS hits
+hitview = TnT::PinTrack(biocwk312::hits_near_ormdl3_trunc10, color="blue")
+# render
+TnTGenome(list(hitview, trxview), view.range=GRanges("17", IRanges(39.5e6, 40.5e6)))
 ```
 
 

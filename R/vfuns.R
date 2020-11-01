@@ -25,7 +25,7 @@ reset_tooltip = function(view,
 #' @export
 reset_color = function(view, ttcolumn="TXBIOTYPE") {
   vd = tntData(view)
-  view$color = TnT::mapcol(elementMetadata(vd)$tooltip[[ttcolumn]])
+  trackData(view)$color = TnT::mapcol(elementMetadata(vd)$tooltip[[ttcolumn]])
   view
 }
 
@@ -39,8 +39,11 @@ reset_display_label = function(view, cols2use=c("SYMBOL", "TXBIOTYPE")) {
 
         vd = tntData(view)
         ttdf = elementMetadata(vd)$tooltip
-        view$display_label <- TnT::strandlabel(do.call( paste, ttdf[, cols2use] ),
-          strand(TnT::trackData(view)))
+        rm(vd)
+        newlabs = do.call( paste, ttdf[, cols2use] )
+        stran = strand(TnT::trackData(view))
+        newlab = TnT::strandlabel(newlabs, stran)
+        trackData(view)$display_label <- newlab
         view
 }
 

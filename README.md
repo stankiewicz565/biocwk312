@@ -1,53 +1,45 @@
-# BuildABiocWorkshop2020
-
-This package is a template for building a Bioconductor 2020 workshop. The package
-includes Github actions to:
-
-1. Set up bioconductor/bioconductor_docker:devel on Github resources
-2. Install package dependencies for your package (based on the `DESCRIPTION` file)
-3. Run `rcmdcheck::rcmdcheck`
-4. Build a pkgdown website and push it to github pages
-5. Build a docker image with the installed package and dependencies
-
-## Responsibilities
-
-This year, package authors will be primarily responsible for:
-
-1. Creating a landing site of their choosing for their workshops (a website). This website should be listed in the `DESCRIPTION` file as the `URL`.
-2. Creating a docker account and image that will contain workshop materials and the installed packages necessary to run those materials. The name of the resulting docker image, including "tag" if desired, should be listed in a non-standard tag, `DockerImage:` in the `DESCRIPTION` file. 
-
-Both of those tasks can be accomplished using the Github actions included in this template package. The vignette accompanying this package describes how to accomplish both of these tasks.
-
-## Details
-
-For detailed instructions, see the `How to build a workshop` article/vignette.
-
-## Results of successful deployment
-
-- A working docker image that contains the installed package and dependencies.
-- An up-to-date `pkgdown` website at https://YOURUSERNAME.github.io/YOURREPOSITORYNAME/
-- Docker image will be tagged with `latest`, `sha-XXXXXX` where `XXXXXX` is the hash of the current `master` commit, and `master`. 
-
-## To use the resulting image:
-
-```sh
-docker run -e PASSWORD=<choose_a_password_for_rstudio> -p 8787:8787 YOURDOCKERIMAGENAME
-```
-Once running, navigate to https://localhost:8787/ and then login with `rstudio`:`yourchosenpassword`. 
-
-To try with **this** repository docker image:
-
-```sh
-docker run -e PASSWORD=abc -p 8787:8787 seandavi/buildabiocworkshop2020
-```
-
-*NOTE*: Running docker that uses the password in plain text like above exposes the password to others 
-in a multi-user system (like a shared workstation or compute node). In practice, consider using an environment 
-variable instead of plain text to pass along passwords and other secrets in docker command lines. 
+# Bioconductor 3.12 at Harvard: A series of hands-on workshops
 
 
-## Whatcha get
+Consider the following schematic of topics arising in genomic data science.
 
-https://seandavi.github.io/BuildABiocWorkshop2020
+![triangular schema](triangle.png)
 
-![dockerhub](https://github.com/seandavi/BuildABiocWorkshop2020/raw/master/inst/images/dockerhub_result.png)
+This diagram was constructed as preparation for a curriculum on
+statistical methods for functional genomics to be offered in the
+summer of 2020 at Cold Spring Harbor Laboratory (canceled).
+
+The aim is
+to take students who are primarily concerned with experimental methods 
+of basic genome biology (bottom left corner), and build their 
+expertise up towards the apex of the triangle, so that 
+they are better equipped to use data science to pose 
+and answer broad questions about organism structure and development, homeostasis 
+and disease.  
+
+This process inevitably leads through biotechnological innovation that 
+generates high-dimensional data.  Thus students must travel along the bottom 
+edge of the triangle in addition to moving up.  They must
+complement their basic science methods and knowledge by staying abreast 
+of newest developments in systems and network biology, to ascend 
+along the left edge of the triangle.  Applications to genomic
+medicine require understanding of the methods and findings of
+population genetics, requiring travel up the right edge of the triangle.
+
+We place Bioconductor 
+at the triangle's center as the fundamental locus 
+of computational resources to enable ascent.  For two decades, Bioconductor 
+has facilitated the parsing and modeling of genome-scale experimental data, 
+providing rational high-level access to annotated, interpretable data at the 
+level of genome, transcriptome, or base-pair.  By blending these data 
+models with R, state-of-the-art methods of visualization and statistical inference 
+are immediately available to Bioconductor users.  Resources for pathway and 
+network annotation are also readily available for amalgamation with experimental 
+readouts.  In two weeks’ time, instructors in the Cold Spring Harbor course
+introduce
+working biologists to functional programming, software package use, session management, 
+reproducible research methods, and various aspects of statistical learning, typically 
+adapted directly to the specific experimental modalities of interest to 
+the student.
+ 
+
