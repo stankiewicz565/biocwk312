@@ -13,13 +13,18 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.0
-Depends: 
-    Biobase
+RoxygenNote: 7.1.1
+Depends: R (>= 3.5.0)
 Suggests: 
     knitr,
     rmarkdown,
-    pkgdown
+    pkgdown,
+    DT,
+    TFutils
+Imports: TnT,
+    GenomicRanges,
+    ensembldb,
+    EnsDb.Hsapiens.v79
 URL: https://vjcitn.github.io/biocwk312/
 BugReports: https://github.com/vjcitn/biocwk312/issues/new/choose
 VignetteBuilder: knitr

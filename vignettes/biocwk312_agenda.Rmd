@@ -1,9 +1,9 @@
 ---
-title: "An Example Workshop"
-author: Sean Davis^[seandavi@gmail.com]
+title: "biocwk312 workshops agenda"
+author: Vince Carey^[stvjc@channing.harvard.edu]
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{An Example Workshop}
+  %\VignetteIndexEntry{biocwk312 workshops agenda}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -16,38 +16,34 @@ knitr::opts_chunk$set(
 )
 ```
 
-# Workshop Title
+# Agenda for the Bioconductor 3.12 workshops at Harvard
 
 Authors:
-    Author Name^[Institution],
+    Vince Carey^[Channing Division of Network Medicine, Brigham and Women's Hospital],
     Another Author^[Another Institution].
     <br/>
-Last modified: 14 May, 2018.
+Last modified: 1 Nov, 2020.
 
 ## Overview
 
 ### Description
 
-Along with the topic of your workshop, include how students can expect
-to spend their time. For the description may also include information
-about what type of workshop it is (e.g. instructor-led live demo, lab,
-lecture + lab, etc.). Instructors are strongly recommended to provide
-completely worked examples for lab sessions, and a set of stand-alone
-notes that can be read and understood outside of the workshop.
+This document is a technical illustration of how workshop documents
+are authored and rendered.  The content _of this document_ will change completely
+as the workshop content is specified.
 
 ### Pre-requisites
 
-List any workshop prerequisites, for example:
-
 * Basic knowledge of R syntax
-* Familiarity with the GenomicRanges class
-* Familiarity with xyz vignette (provide link)
+* Familiarity with Rstudio
+* Basic understanding of modern genomics.  For example, the distinction
+between whole genome sequencing and RNA-seq should be clear.
+* Basic familiarity with the concepts of statistical analysis, such
+as the definition of the t-test for comparing sample means, the
+interpretation of histograms.  An understanding of experimental design
+is helpful.
+* Readings:
 
-List relevant background reading for the workshop, including any
-theoretical background you expect students to have.
-
-* List any textbooks, papers, or other reading that students should be
-  familiar with. Include direct links where possible.
 
 ### Participation
 
@@ -63,10 +59,12 @@ An example for a 45-minute workshop:
 
 | Activity                     | Time |
 |------------------------------|------|
-| Packages                     | 15m  |
-| Package Development          | 15m  |
-| Contributing to Bioconductor | 5m   |
-| Best Practices               | 10m  |
+| Brief intro to R/Rstudio     | 10m  |
+| Biological context           | 10m  |
+| Packages to be used          | 10m  |
+| Analytical approach to the question | 15m   |
+| Simple exercises               | 10m  |
+| Review               | 5m  |
 
 ### Workshop goals and objectives
 

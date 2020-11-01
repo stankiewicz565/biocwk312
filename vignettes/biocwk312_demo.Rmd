@@ -1,0 +1,187 @@
+---
+title: "biocwk312 workshops demo"
+author: Vince Carey^[stvjc@channing.harvard.edu]
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{biocwk312 workshops demo}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+bibliography: biocwk312.bib
+---
+
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Demo doc template for the Bioconductor 3.12 workshops at Harvard
+
+Authors:
+    Vince Carey^[Channing Division of Network Medicine, Brigham and Women's Hospital],
+    Another Author^[Another Institution].
+    <br/>
+Last modified: 1 Nov, 2020.
+
+## Overview
+
+### Description
+
+This document is a technical illustration of how workshop documents
+are authored and rendered.  The content _of this document_ will change completely
+as the workshop content is specified.
+
+### Pre-requisites [should be specd for each workshop]
+
+* Basic knowledge of R syntax
+* Familiarity with Rstudio
+* Basic understanding of modern genomics.  For example, the distinction
+between whole genome sequencing and RNA-seq should be clear.
+* Basic familiarity with the concepts of statistical analysis, such
+as the definition of the t-test for comparing sample means, the
+interpretation of histograms.  An understanding of experimental design
+is helpful.
+* Readings:
+
+
+### Participation
+
+Describe how students will be expected to participate in the workshop.
+
+### _R_ / _Bioconductor_ packages used
+
+List any _R_ / _Bioconductor_ packages that will be explicitly covered.
+
+### Time outline
+
+An example for a 45-minute workshop:
+
+| Activity                     | Time |
+|------------------------------|------|
+| Brief intro to R/Rstudio     | 10m  |
+| Biological context           | 10m  |
+| Packages to be used          | 10m  |
+| Analytical approach to the question | 15m   |
+| Simple exercises               | 10m  |
+| Review               | 5m  |
+
+### Workshop goals and objectives
+
+List "big picture" student-centered workshop goals and learning
+objectives. Learning goals and objectives are related, but not the
+same thing. These goals and objectives will help some people to decide
+whether to attend the conference for training purposes, so please make
+these as precise and accurate as possible.
+
+*Learning goals* are high-level descriptions of what
+participants will learn and be able to do after the workshop is
+over. *Learning objectives*, on the other hand, describe in very
+specific and measurable terms specific skills or knowledge
+attained. The [Bloom's Taxonomy](#bloom) may be a useful framework
+for defining and describing your goals and objectives, although there
+are others.
+
+### Learning goals
+
+Some examples:
+
+* describe how to...
+* identify methods for...
+* understand the difference between...
+
+### Learning objectives
+
+* analyze xyz data to produce...
+* create xyz plots
+* evaluate xyz data for artifacts
+
+## Workshop Content
+
+```{r setup}
+suppressPackageStartupMessages({
+  library(TnT)
+  library(biocwk312)
+})
+```
+
+### Thinking about tables
+
+In the following chunk, we retrieve and render a table produced
+in @Lambert2018.  When rendered in HTML, the table is searchable,
+thanks to 'DT::datatable'.
+
+```{r lkt1}
+library(TFutils)
+lamtab = retrieve_lambert_main()
+library(DT)
+datatable(lamtab)
+```
+
+Exercise: How many records mention transcription factor 'YY1'?
+
+Note that each transcription factor is accompanied by an Ensembl
+identifier.  It would be nice to have hyperlinks to Ensembl
+pages.  We can accomplish this by 'wrapping' the identifier to create
+a hyperlink, and then rendering using the 'escape=FALSE' setting
+for 'datatable'.
+
+```{r dowra}
+usw_pref = "https://uswest.ensembl.org/Homo_sapiens/Gene/Summary?g="
+wr_ens = function(x, pref) {
+ paste0("<A href='", pref, x, "'>", x, "</A>")
+}
+head(wr_ens(lamtab$ID, usw_pref)) # test
+lamtab2 = lamtab
+lamtab2$ID = wr_ens(lamtab2$ID, usw_pref)
+datatable(lamtab2, escape=FALSE)
+```
+
+This is all taken care of for the user of the TFutils package
+in the function 'browse_lambert_main()', which also includes
+links for PubMed IDs scattered in Lambert's published Excel table.
+
+### Thinking about visualization
+
+Visualization of genomic data is closely linked to annotation.
+Annotation can be unwieldy and cumbersome to interrogate.
+We have collected some slices of genomic data and annotation
+to help with exploration of new approaches to interactive visualization
+in reports.
+
+**Reference positions of transcripts**.  We have information on a selection of transcripts
+on chromosome 17 in the vicinity of gene ORMDL3.
+```{r lktx}
+head(biocwk312::txdata_near_ormdl3,3)
+```
+
+**Positions and annotation of GWAS hits**.  We used the `gwascat` package
+to get a copy of the EBI/EMBL GWAS catalog on 1 November 2020, and limited the
+information to records pertaining to the interval 38-43 Mb on chr17.  We
+also limited the number of metadata fields on the hits.
+```{r lkhits}
+names(S4Vectors::mcols(biocwk312::hits_near_ormdl3_trunc10))
+head(biocwk312::hits_near_ormdl3_trunc10, 3)
+```
+
+**An interactive visualization of GWAS hits and nearby genes.**
+
+We'll use the TnT package along with some functions built for the
+workshop to visualize GWAS hit locations in the context of
+transcripts.
+
+```{r lkthe}
+trxview = TxTrackFromGRanges(biocwk312::txdata_near_ormdl3, 
+      label = "Transcript\n Structure",
+      color = "grey2",height = 300)
+trxview = reset_tooltip(trxview)
+trxview = reset_color(trxview)
+trxview = reset_display_label(trxview)
+TnTGenome(trxview)
+```
+
+
+
+
+
