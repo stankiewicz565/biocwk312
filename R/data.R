@@ -13,3 +13,8 @@
 #' The resulting GRanges was then limited to a 5Mb window starting at 38e6.  The mcols column
 #' 'type' is set to 'exon'.
 "txdata_near_ormdl3"
+
+#' the main table of Lambert et al., Cell 2018: "The human transcription factors"
+#' @docType data
+#' @format tibble
+"lamb_main_20201101"

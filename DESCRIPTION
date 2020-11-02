@@ -1,6 +1,6 @@
 Package: biocwk312
 Title: Workshop intro for Bioconductor 3.12.
-Version: 0.1.2
+Version: 0.1.3
 Authors@R: 
     person(given = "Vince",
            family = "Carey",
@@ -19,15 +19,14 @@ Suggests:
     knitr,
     rmarkdown,
     pkgdown,
-    DT,
-    TFutils
+    DT
 Imports: TnT,
     GenomicRanges,
     ensembldb,
     EnsDb.Hsapiens.v79,
     S4Vectors, 
     BiocFileCache,
-    readxl
+    tibble
 URL: https://vjcitn.github.io/biocwk312/
 BugReports: https://github.com/vjcitn/biocwk312/issues/new/choose
 VignetteBuilder: knitr

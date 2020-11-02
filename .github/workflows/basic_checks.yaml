@@ -37,7 +37,6 @@ jobs:
           options(repos = c(CRAN = "https://cran.r-project.org"))
           BiocManager::repositories()
           remotes::install_deps(dependencies = TRUE, repos = BiocManager::repositories())
-          BiocManager::install("vjcitn/TFutils")
           remotes::install_cran("rcmdcheck")
         shell: Rscript {0}
 
@@ -45,7 +44,6 @@ jobs:
         env:
           _R_CHECK_CRAN_INCOMING_REMOTE_: false
         run: |
-          BiocManager::install("vjcitn/TFutils") # change to cache for xlsx 
           rcmdcheck::rcmdcheck(args = c("--no-manual"), error_on = "warning", check_dir = "check")
         shell: Rscript {0}
         

@@ -102,9 +102,8 @@ Some examples:
 ```{r setup}
 suppressPackageStartupMessages({
   library(TnT)
+  library(tibble)
   library(biocwk312)
-  library(BiocFileCache) # needed for TFutils
-  library(readxl) # needed for TFutils
 })
 ```
 
@@ -115,8 +114,7 @@ in @Lambert2018.  When rendered in HTML, the table is searchable,
 thanks to 'DT::datatable'.
 
 ```{r lkt1}
-library(TFutils)
-lamtab = retrieve_lambert_main()
+lamtab = biocwk312::lamb_main_20201101
 library(DT)
 datatable(lamtab)
 ```
