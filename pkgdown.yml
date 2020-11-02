@@ -2,9 +2,9 @@ pandoc: 2.7.3
 pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
-  HOWTO_BUILD_WORKSHOP: HOWTO_BUILD_WORKSHOP.html
-  workshop_example: workshop_example.html
-last_built: 2020-10-31T21:57Z
+  biocwk312_agenda: biocwk312_agenda.html
+  biocwk312_demo: biocwk312_demo.html
+last_built: 2020-11-02T03:31Z
 urls:
   reference: https://seandavi.github.io/sars2pack/reference
   article: https://seandavi.github.io/sars2pack/articles

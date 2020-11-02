@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">biocwk312</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.3</span>
       </span>
     </div>
 
@@ -61,10 +61,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="articles/HOWTO_BUILD_WORKSHOP.html">How To Build A Workshop Package</a>
+      <a href="articles/biocwk312_agenda.html">biocwk312 workshops agenda</a>
     </li>
     <li>
-      <a href="articles/workshop_example.html">An Example Workshop</a>
+      <a href="articles/biocwk312_demo.html">biocwk312 workshops demo</a>
     </li>
   </ul>
 </li>
@@ -88,58 +88,15 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="buildabiocworkshop2020" class="section level1">
+<div id="bioconductor-312-at-harvard-a-series-of-hands-on-workshops" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#buildabiocworkshop2020" class="anchor"></a>BuildABiocWorkshop2020</h1></div>
-<p>This package is a template for building a Bioconductor 2020 workshop. The package includes Github actions to:</p>
-<ol>
-<li>Set up bioconductor/bioconductor_docker:devel on Github resources</li>
-<li>Install package dependencies for your package (based on the <code>DESCRIPTION</code> file)</li>
-<li>Run <code><a href="https://rdrr.io/pkg/rcmdcheck/man/rcmdcheck.html">rcmdcheck::rcmdcheck</a></code>
-</li>
-<li>Build a pkgdown website and push it to github pages</li>
-<li>Build a docker image with the installed package and dependencies</li>
-</ol>
-<div id="responsibilities" class="section level2">
-<h2 class="hasAnchor">
-<a href="#responsibilities" class="anchor"></a>Responsibilities</h2>
-<p>This year, package authors will be primarily responsible for:</p>
-<ol>
-<li>Creating a landing site of their choosing for their workshops (a website). This website should be listed in the <code>DESCRIPTION</code> file as the <code>URL</code>.</li>
-<li>Creating a docker account and image that will contain workshop materials and the installed packages necessary to run those materials. The name of the resulting docker image, including “tag” if desired, should be listed in a non-standard tag, <code>DockerImage:</code> in the <code>DESCRIPTION</code> file.</li>
-</ol>
-<p>Both of those tasks can be accomplished using the Github actions included in this template package. The vignette accompanying this package describes how to accomplish both of these tasks.</p>
-</div>
-<div id="details" class="section level2">
-<h2 class="hasAnchor">
-<a href="#details" class="anchor"></a>Details</h2>
-<p>For detailed instructions, see the <code>How to build a workshop</code> article/vignette.</p>
-</div>
-<div id="results-of-successful-deployment" class="section level2">
-<h2 class="hasAnchor">
-<a href="#results-of-successful-deployment" class="anchor"></a>Results of successful deployment</h2>
-<ul>
-<li>A working docker image that contains the installed package and dependencies.</li>
-<li>An up-to-date <code>pkgdown</code> website at <a href="https://YOURUSERNAME.github.io/YOURREPOSITORYNAME/" class="uri">https://YOURUSERNAME.github.io/YOURREPOSITORYNAME/</a>
-</li>
-<li>Docker image will be tagged with <code>latest</code>, <code>sha-XXXXXX</code> where <code>XXXXXX</code> is the hash of the current <code>master</code> commit, and <code>master</code>.</li>
-</ul>
-</div>
-<div id="to-use-the-resulting-image" class="section level2">
-<h2 class="hasAnchor">
-<a href="#to-use-the-resulting-image" class="anchor"></a>To use the resulting image:</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1"></a><span class="ex">docker</span> run -e PASSWORD=<span class="op">&lt;</span>choose_a_password_for_rstudio<span class="op">&gt;</span> -p 8787:8787 YOURDOCKERIMAGENAME</span></code></pre></div>
-<p>Once running, navigate to <a href="https://localhost:8787/" class="uri">https://localhost:8787/</a> and then login with <code>rstudio</code>:<code>yourchosenpassword</code>.</p>
-<p>To try with <strong>this</strong> repository docker image:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1"></a><span class="ex">docker</span> run -e PASSWORD=abc -p 8787:8787 seandavi/buildabiocworkshop2020</span></code></pre></div>
-<p><em>NOTE</em>: Running docker that uses the password in plain text like above exposes the password to others in a multi-user system (like a shared workstation or compute node). In practice, consider using an environment variable instead of plain text to pass along passwords and other secrets in docker command lines.</p>
-</div>
-<div id="whatcha-get" class="section level2">
-<h2 class="hasAnchor">
-<a href="#whatcha-get" class="anchor"></a>Whatcha get</h2>
-<p><a href="https://seandavi.github.io/BuildABiocWorkshop2020" class="uri">https://seandavi.github.io/BuildABiocWorkshop2020</a></p>
-<p><img src="https://github.com/seandavi/BuildABiocWorkshop2020/raw/master/inst/images/dockerhub_result.png" alt="dockerhub"></p>
-</div>
+<a href="#bioconductor-312-at-harvard-a-series-of-hands-on-workshops" class="anchor"></a>Bioconductor 3.12 at Harvard: A series of hands-on workshops</h1></div>
+<p>Consider the following schematic of topics arising in genomic data science.</p>
+<p><img src="triangle.png" alt="triangular schema"></p>
+<p>This diagram was constructed as preparation for a curriculum on statistical methods for functional genomics to be offered in the summer of 2020 at Cold Spring Harbor Laboratory (canceled).</p>
+<p>The aim is to take students who are primarily concerned with experimental methods of basic genome biology (bottom left corner), and build their expertise up towards the apex of the triangle, so that they are better equipped to use data science to pose and answer broad questions about organism structure and development, homeostasis and disease.</p>
+<p>This process inevitably leads through biotechnological innovation that generates high-dimensional data. Thus students must travel along the bottom edge of the triangle in addition to moving up. They must complement their basic science methods and knowledge by staying abreast of newest developments in systems and network biology, to ascend along the left edge of the triangle. Applications to genomic medicine require understanding of the methods and findings of population genetics, requiring travel up the right edge of the triangle.</p>
+<p>We place Bioconductor at the triangle’s center as the fundamental locus of computational resources to enable ascent. For two decades, Bioconductor has facilitated the parsing and modeling of genome-scale experimental data, providing rational high-level access to annotated, interpretable data at the level of genome, transcriptome, or base-pair. By blending these data models with R, state-of-the-art methods of visualization and statistical inference are immediately available to Bioconductor users. Resources for pathway and network annotation are also readily available for amalgamation with experimental readouts. In two weeks’ time, instructors in the Cold Spring Harbor course introduce working biologists to functional programming, software package use, session management, reproducible research methods, and various aspects of statistical learning, typically adapted directly to the specific experimental modalities of interest to the student.</p>
 </div>
   </div>
 
