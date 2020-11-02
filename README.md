@@ -3,7 +3,7 @@
 
 Consider the following schematic of topics arising in genomic data science.
 
-![triangular schema](https://github.com/vjcitn/biocwk312/blob/master/triangle.png)
+![triangular schema](reference/figures/triangle.png)
 
 This diagram was constructed as preparation for a curriculum on
 statistical methods for functional genomics to be offered in the
