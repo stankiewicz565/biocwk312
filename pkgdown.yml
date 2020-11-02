@@ -4,7 +4,10 @@ pkgdown_sha: ~
 articles:
   biocwk312_agenda: biocwk312_agenda.html
   biocwk312_demo: biocwk312_demo.html
-last_built: 2020-11-02T14:19Z
+  ws1_intro: ws1_intro.html
+  ws2_transcriptomics: ws2_transcriptomics.html
+  ws3_genetics: ws3_genetics.html
+last_built: 2020-11-02T18:57Z
 urls:
   reference: https://seandavi.github.io/sars2pack/reference
   article: https://seandavi.github.io/sars2pack/articles
