@@ -1,0 +1,35 @@
+---
+title: "WS3 Human disease genetics with Bioconductor 3.12"
+author: Vince Carey^[stvjc@channing.harvard.edu]
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{WS2 Human disease genetics with Bioconductor 3.12}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+bibliography: biocwk312.bib
+---
+
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+
+# Computing foundations for disease genetics research
+
+## Human genetics - basic principles
+
+## The EBI/EMBL GWAS catalog
+
+## Rare variants: gnomAD  (is this available either as a service or a dataset?)
+
+## VariantAnnotation and OpenCRAVAT
+
+## Additional resources
+
+- epigenetic marks etc from UKBiobank
+- Polygenic Risk Scores
+

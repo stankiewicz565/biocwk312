@@ -1,0 +1,34 @@
+---
+title: "WS2 Introduction to transcriptomics with Bioconductor 3.12"
+author: Vince Carey^[stvjc@channing.harvard.edu]
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{WS2 Introduction to transcriptomics with Bioconductor 3.12}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+bibliography: biocwk312.bib
+---
+
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+
+# Transcriptome analysis via bulk RNA-seq
+
+## What's already done: the recount3 compendium
+
+## Your own sequencing: tximport, tximeta to DESeq2
+
+# Single-cell RNA-seq
+
+## The CONQUER compendium
+
+## Your own sequencing: alevin ...
+
+# Gene set methods in brief: working with MSigDb, TFtools
+

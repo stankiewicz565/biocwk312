@@ -102,6 +102,7 @@ Some examples:
 ```{r setup}
 suppressPackageStartupMessages({
   library(TnT)
+  library(knitr)
   library(tibble)
   library(biocwk312)
 })
@@ -110,21 +111,21 @@ suppressPackageStartupMessages({
 ### Thinking about tables
 
 In the following chunk, we retrieve and render a table produced
-in @Lambert2018.  When rendered in HTML, the table is searchable,
-thanks to 'DT::datatable'.
+in @Lambert2018.  
 
 ```{r lkt1}
 lamtab = biocwk312::lamb_main_20201101
-library(DT)
-datatable(lamtab)
+kable(lamtab[1:5,])
 ```
 
-Exercise: How many records mention transcription factor 'YY1'?
+
+When rendered in HTML, the table is searchable,
+thanks to 'DT::datatable'.
 
 Note that each transcription factor is accompanied by an Ensembl
-identifier.  It would be nice to have hyperlinks to Ensembl
-pages.  We can accomplish this by 'wrapping' the identifier to create
-a hyperlink, and then rendering using the 'escape=FALSE' setting
+identifier.  
+We 'wrap' the identifiers to create
+a hyperlink, and then render using the 'escape=FALSE' setting
 for 'datatable'.
 
 ```{r dowra}
@@ -135,12 +136,14 @@ wr_ens = function(x, pref) {
 head(wr_ens(lamtab$ID, usw_pref)) # test
 lamtab2 = lamtab
 lamtab2$ID = wr_ens(lamtab2$ID, usw_pref)
-datatable(lamtab2, escape=FALSE)
+DT::datatable(lamtab2, escape=FALSE)
 ```
 
 This is all taken care of for the user of the TFutils package
 in the function 'browse_lambert_main()', which also includes
 links for PubMed IDs scattered in Lambert's published Excel table.
+
+Exercise: How many records mention transcription factor 'YY1'?
 
 ### Thinking about visualization
 
@@ -171,6 +174,13 @@ We'll use the TnT package along with some functions built for the
 workshop to visualize GWAS hit locations in the context of
 transcripts.
 
+The display below is interactive.  Clicking the mouse or trackpad
+near the middle will zoom in.  A mouse wheel will also control
+zoom.  At greater magnifications, annotations will be displayed,
+or you can click on a feature to get textual annotation.  You can
+drag the display left or right after magnification.  To restore
+initial state, reload the page in the browser.
+
 ```{r lkthe}
 # first setup transcripts
 trxview = TxTrackFromGRanges(biocwk312::txdata_near_ormdl3, 
@@ -185,6 +195,13 @@ hitview = TnT::PinTrack(biocwk312::hits_near_ormdl3_trunc10, color="blue")
 TnTGenome(list(hitview, trxview), view.range=GRanges("17", IRanges(39.5e6, 40.5e6)))
 ```
 
+Exercise: There is a single GWAS hit on chr17 between positions 39,932,000 and 39,934,000.  Use
+zoom and drag to find it.  What is the rs number for the SNP, what is the disease/trait with which
+this SNP is associated, and what is the risk allele frequency?  These can be determined by
+clicking on the head of the blue pin plotted in the interval given.
+
+
+# References
 
 
 

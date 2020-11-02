@@ -1,0 +1,36 @@
+---
+title: "WS1 Introduction to Bioconductor 3.12"
+author: Vince Carey^[stvjc@channing.harvard.edu]
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{WS1 Introduction to Bioconductor 3.12}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+bibliography: biocwk312.bib
+---
+
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+
+# Prerequisites and motivating examples
+
+## Programming and package use with R 4.0.3
+
+## Basics of genome annotation: reference genomes, transcriptomes, ...
+
+- BSgenome, EnsDb, AnnotationHub
+
+## The Cancer Genome Atlas, a paradigm of federated multiomics
+
+- TCGA, curatedTCGAData
+
+## The OSCA book, a paradigm of computable scientific literature
+
+- OSCA book
+- probably need 1b on scRNA, one part on just the basics, on on how to work with the clusters you find
