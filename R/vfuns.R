@@ -6,7 +6,6 @@ tntData = function(x) slot(x, "Data")
 #' @import TnT 
 #' @importFrom ensembldb select
 #' @importFrom S4Vectors elementMetadata
-#' @importFrom readxl read_xlsx  
 #' @importFrom BiocFileCache bfcadd
 #' @import EnsDb.Hsapiens.v79
 #' @import GenomicRanges
