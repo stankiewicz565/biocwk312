@@ -1,4 +1,4 @@
-url: https://seandavi.github.io/sars2pack
+url: https://vjcitn.github.io/biocwk312
 
 template:
   params:
@@ -6,13 +6,13 @@ template:
     ganalytics: UA-93043521-1
 
 home:
-  title: "BuildABiocWorkshop2020"
+  title: "Bioconductor 3.12 workshops at Harvard"
   type: inverse
 
 
 navbar:
   right:
    - icon: fa-github
-     href: https://github.com/seandavi/BuildABiocWorkshop2020
+     href: https://github.com/vjcitn/biocwk312
      
 
