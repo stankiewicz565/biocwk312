@@ -1,7 +1,10 @@
 ---
 title: "WS1 Introduction to Bioconductor 3.12"
 author: Vince Carey^[stvjc@channing.harvard.edu]
-output: rmarkdown::html_vignette
+output: 
+  rmarkdown::html_vignette:
+    fig_height: 4
+    fig_width: 5
 vignette: >
   %\VignetteIndexEntry{WS1 Introduction to Bioconductor 3.12}
   %\VignetteEngine{knitr::rmarkdown}
@@ -20,7 +23,89 @@ knitr::opts_chunk$set(
 
 # Prerequisites and motivating examples
 
+## Pre-requisites
+
+* Basic knowledge of R syntax
+* Familiarity with Rstudio
+* Basic understanding of modern genomics.  For example, the distinction
+between whole genome sequencing and RNA-seq should be clear.
+* Basic familiarity with the concepts of statistical analysis, such
+as the definition of the t-test for comparing sample means, the
+interpretation of histograms.  An understanding of experimental design
+is helpful.
+* Optional readings:
+    - [An introduction to R](https://cran.r-project.org/doc/manuals/r-release/R-intro.pdf)
+    - [The beginners page](https://education.rstudio.com/learn/beginner/) at the Rstudio education portal.
+    - [An introduction to Bioconductor](https://www.datacamp.com/community/tutorials/intro-bioconductor) at DataCamp.
+
+
 ## Programming and package use with R 4.0.3
+
+R is a programming language focusing on activities
+important in statistical data analysis, but it is
+often thought of more as an interactive environment
+for working with data.  This concept of "environment"
+will become clearer as we use R to perform progressively
+mode complex tasks.
+
+### Simple illustrations
+
+- simple arithmetic
+```{r ill1}
+(7+5)/(3*6)
+```
+- assignment; string definitions and operations
+```{r ill2}
+s = "abc"
+s
+paste(s, s, sep="")
+```
+- random number generation
+```{r ill3}
+x = rnorm(5)
+x
+```
+- data visualization
+```{r ill4}
+y = rnorm(5)
+plot(x,y)
+```
+
+### Making new variables
+
+In the example `s = "abc"`, we formed a _string constant_
+by enclosing `abc` in quotes and _assigned_ it to the
+variable `s`.  This operation could also be written
+`s <- "abc"` or `"abc" -> s`.
+
+### Calling functions
+
+The most common syntax for working with R was illustrated
+in the string operation illustration: `paste(s, s, sep="")`.
+This operation took the string variables `s` and
+concatenated it with itself.  The
+additional function argument `sep=""` arranges
+that the concatenation is to occur without any intervening text.
+
+The examples illustrate the use of two more functions: `rnorm`,
+and `plot`.
+
+### Packages
+
+The family of functions and data available in an R
+session depends upon the collection of packages
+attached in the session.  Packages are used to
+collect related functions together with their
+documentation.  We can add to the collection of
+functions available for plotting, and use
+the ggplot approach to designing visualizations,
+as follows. 
+```{r dogg}
+library(ggplot2)
+simpdf = data.frame(x,y)
+ggplot(simpdf, aes(x=x, y=y)) + geom_point()
+```
+
 
 ## Basics of genome annotation: reference genomes, transcriptomes, ...
 
