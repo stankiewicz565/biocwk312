@@ -37,7 +37,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">biocwk312</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.6</span>
       </span>
     </div>
 
@@ -158,9 +158,10 @@
 <li>random number generation</li>
 </ul>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">x</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">1234</span><span class="op">)</span> <span class="co"># setting a seed for reproducibility</span>
+<span class="va">x</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span>
 <span class="va">x</span>
-<span class="co">#&gt; [1] -1.30410309  0.29917014 -0.07421241 -1.73522504 -0.99578690</span></code></pre></div>
+<span class="co">#&gt; [1] -1.2070657  0.2774292  1.0844412 -2.3456977  0.4291247</span></code></pre></div>
 <ul>
 <li>data visualization</li>
 </ul>
@@ -190,13 +191,211 @@
 <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">simpdf</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">x</span>, y<span class="op">=</span><span class="va">y</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="ws1_intro_files/figure-html/dogg-1.png" width="700"></p>
 </div>
+<div id="summary-strategies-for-bioinformatics-with-rbioconductor" class="section level3">
+<h3 class="hasAnchor">
+<a href="#summary-strategies-for-bioinformatics-with-rbioconductor" class="anchor"></a>Summary: strategies for bioinformatics with R/Bioconductor</h3>
+<p>These questions should be considered in preparing to work with R for bioinformatics analysis.</p>
+<ul>
+<li>What question do I want to answer with this analysis?</li>
+<li>What data am I going to use? Have I clearly documented the production of the data, including its origin, quality assessment, data editing, sample annotations?</li>
+<li>What is a clear verbal description of the analysis to be performed?</li>
+<li>What R/Bioconductor packages can be used to conduct the analysis?</li>
+<li>If the analysis consists of a sequence of steps, should I save interim results in case an error occurs somewhere downstream?</li>
+<li>What steps will I take to ensure that the analysis is reproducible by independent parties?</li>
+</ul>
+<p>The Bioconductor software/analysis/documentation ecosystem can help with answers to these questions. There are many facets to the ecosystem. Bioconductor users form an active community and post questions and answers at <code>support.bioconductor.org</code>. You can often get input on answers to some of the questions above by browsing and searching that site and posting your own questions.</p>
 </div>
-<div id="basics-of-genome-annotation-reference-genomes-transcriptomes" class="section level2">
+</div>
+<div id="basics-of-genome-annotation-reference-genomes-transcriptomes-functional-annotation" class="section level2">
 <h2 class="hasAnchor">
-<a href="#basics-of-genome-annotation-reference-genomes-transcriptomes" class="anchor"></a>Basics of genome annotation: reference genomes, transcriptomes, …</h2>
+<a href="#basics-of-genome-annotation-reference-genomes-transcriptomes-functional-annotation" class="anchor"></a>Basics of genome annotation: reference genomes, transcriptomes, functional annotation</h2>
+<div id="reference-genomic-sequence" class="section level3">
+<h3 class="hasAnchor">
+<a href="#reference-genomic-sequence" class="anchor"></a>Reference genomic sequence</h3>
+<p>The <code>BSgenome</code> package defines infrastructure that supports compact representation of genomic sequences. We’ll have a look at a recent reference build for baker’s yeast. For this to work, we need to know the name of the package that provides the genomic sequence, install it, and use appropriate functions to work with the BSgenome representation.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># BiocManager::install("BSgenome.Scerevisiae.UCSC.sacCer3") if necessary</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://bioconductor.org/packages/BSgenome">BSgenome</a></span><span class="op">)</span>
+<span class="co">#&gt; Loading required package: BiocGenerics</span>
+<span class="co">#&gt; Loading required package: parallel</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Attaching package: 'BiocGenerics'</span>
+<span class="co">#&gt; The following objects are masked from 'package:parallel':</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;     clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,</span>
+<span class="co">#&gt;     clusterExport, clusterMap, parApply, parCapply, parLapply,</span>
+<span class="co">#&gt;     parLapplyLB, parRapply, parSapply, parSapplyLB</span>
+<span class="co">#&gt; The following objects are masked from 'package:stats':</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;     IQR, mad, sd, var, xtabs</span>
+<span class="co">#&gt; The following objects are masked from 'package:base':</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;     anyDuplicated, append, as.data.frame, basename, cbind, colnames,</span>
+<span class="co">#&gt;     dirname, do.call, duplicated, eval, evalq, Filter, Find, get, grep,</span>
+<span class="co">#&gt;     grepl, intersect, is.unsorted, lapply, Map, mapply, match, mget,</span>
+<span class="co">#&gt;     order, paste, pmax, pmax.int, pmin, pmin.int, Position, rank,</span>
+<span class="co">#&gt;     rbind, Reduce, rownames, sapply, setdiff, sort, table, tapply,</span>
+<span class="co">#&gt;     union, unique, unsplit, which.max, which.min</span>
+<span class="co">#&gt; Loading required package: S4Vectors</span>
+<span class="co">#&gt; Loading required package: stats4</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Attaching package: 'S4Vectors'</span>
+<span class="co">#&gt; The following object is masked from 'package:base':</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;     expand.grid</span>
+<span class="co">#&gt; Loading required package: IRanges</span>
+<span class="co">#&gt; Loading required package: GenomeInfoDb</span>
+<span class="co">#&gt; Loading required package: GenomicRanges</span>
+<span class="co">#&gt; Loading required package: Biostrings</span>
+<span class="co">#&gt; Loading required package: XVector</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Attaching package: 'Biostrings'</span>
+<span class="co">#&gt; The following object is masked from 'package:base':</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;     strsplit</span>
+<span class="co">#&gt; Loading required package: rtracklayer</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">BSgenome.Scerevisiae.UCSC.sacCer3</span><span class="op">)</span>
+<span class="va">yeastg</span> <span class="op">=</span> <span class="va">BSgenome.Scerevisiae.UCSC.sacCer3</span>
+<span class="va">yeastg</span>
+<span class="co">#&gt; Yeast genome:</span>
+<span class="co">#&gt; # organism: Saccharomyces cerevisiae (Yeast)</span>
+<span class="co">#&gt; # genome: sacCer3</span>
+<span class="co">#&gt; # provider: UCSC</span>
+<span class="co">#&gt; # release date: April 2011</span>
+<span class="co">#&gt; # 17 sequences:</span>
+<span class="co">#&gt; #   chrI    chrII   chrIII  chrIV   chrV    chrVI   chrVII  chrVIII chrIX  </span>
+<span class="co">#&gt; #   chrX    chrXI   chrXII  chrXIII chrXIV  chrXV   chrXVI  chrM           </span>
+<span class="co">#&gt; # (use 'seqnames()' to see all the sequence names, use the '$' or '[[' operator</span>
+<span class="co">#&gt; # to access a given sequence)</span></code></pre></div>
+<p>Evaluation of <code>yeastg</code> in the R session produces a brief report on the BSgenome representation. We can look at chromosomal sequence with</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">yeastg</span><span class="op">$</span><span class="va">chrI</span>
+<span class="co">#&gt; 230218-letter DNAString object</span>
+<span class="co">#&gt; seq: CCACACCACACCCACACACCCACACACCACACCACA...GGTGTGTGGGTGTGGTGTGGGTGTGGTGTGTGTGGG</span></code></pre></div>
+<p>What we call <code>yeastg</code> is a Bioconductor representation of the genome of a model organism. Similar representations are available for more species:</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/BSgenome/man/available.genomes.html">available.genomes</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; [1] 100</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/BSgenome/man/available.genomes.html">available.genomes</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; [1] "BSgenome.Alyrata.JGI.v1"                </span>
+<span class="co">#&gt; [2] "BSgenome.Amellifera.BeeBase.assembly4"  </span>
+<span class="co">#&gt; [3] "BSgenome.Amellifera.UCSC.apiMel2"       </span>
+<span class="co">#&gt; [4] "BSgenome.Amellifera.UCSC.apiMel2.masked"</span>
+<span class="co">#&gt; [5] "BSgenome.Aofficinalis.NCBI.V1"          </span>
+<span class="co">#&gt; [6] "BSgenome.Athaliana.TAIR.04232008"</span></code></pre></div>
+<p>Each of the genomes listed in the output of <code>available_genomes()</code> can be obtained by installing the associated package, attaching the package and then operating with the eponymous object, as in <code>yeastg = BSgenome.Scerevisiae.UCSC.sacCer3</code>. All of the objects representing the reference genomes of model organisms are instance of a ‘class’.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">yeastg</span><span class="op">)</span>
+<span class="co">#&gt; [1] "BSgenome"</span>
+<span class="co">#&gt; attr(,"package")</span>
+<span class="co">#&gt; [1] "BSgenome"</span></code></pre></div>
+<p>One way of discovering the family of functions that have been defined to work with instances of a class is to use the <code>methods</code> function:</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/methods.html">methods</a></span><span class="op">(</span>class<span class="op">=</span><span class="st">"BSgenome"</span><span class="op">)</span>
+<span class="co">#&gt;  [1] [[              $               as.list         bsgenomeName   </span>
+<span class="co">#&gt;  [5] coerce          commonName      countPWM        export         </span>
+<span class="co">#&gt;  [9] extractAt       getSeq          injectSNPs      length         </span>
+<span class="co">#&gt; [13] masknames       matchPWM        metadata        metadata&lt;-     </span>
+<span class="co">#&gt; [17] mseqnames       names           organism        provider       </span>
+<span class="co">#&gt; [21] providerVersion releaseDate     releaseName     seqinfo        </span>
+<span class="co">#&gt; [25] seqinfo&lt;-       seqnames        seqnames&lt;-      show           </span>
+<span class="co">#&gt; [29] snpcount        SNPlocs_pkgname snplocs         sourceUrl      </span>
+<span class="co">#&gt; [33] vcountPattern   vcountPDict     Views           vmatchPattern  </span>
+<span class="co">#&gt; [37] vmatchPDict    </span>
+<span class="co">#&gt; see '?methods' for accessing help and source code</span></code></pre></div>
+<p>Let’s try one:</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">atgm</span> <span class="op">=</span> <span class="fu">vmatchPattern</span><span class="op">(</span><span class="st">"ATG"</span>, <span class="va">yeastg</span><span class="op">)</span>
+<span class="va">atgm</span>
+<span class="co">#&gt; GRanges object with 444764 ranges and 0 metadata columns:</span>
+<span class="co">#&gt;            seqnames      ranges strand</span>
+<span class="co">#&gt;               &lt;Rle&gt;   &lt;IRanges&gt;  &lt;Rle&gt;</span>
+<span class="co">#&gt;        [1]     chrI     283-285      +</span>
+<span class="co">#&gt;        [2]     chrI     335-337      +</span>
+<span class="co">#&gt;        [3]     chrI     388-390      +</span>
+<span class="co">#&gt;        [4]     chrI     436-438      +</span>
+<span class="co">#&gt;        [5]     chrI     492-494      +</span>
+<span class="co">#&gt;        ...      ...         ...    ...</span>
+<span class="co">#&gt;   [444760]     chrM 85069-85071      -</span>
+<span class="co">#&gt;   [444761]     chrM 85322-85324      -</span>
+<span class="co">#&gt;   [444762]     chrM 85470-85472      -</span>
+<span class="co">#&gt;   [444763]     chrM 85681-85683      -</span>
+<span class="co">#&gt;   [444764]     chrM 85776-85778      -</span>
+<span class="co">#&gt;   -------</span>
+<span class="co">#&gt;   seqinfo: 17 sequences from an unspecified genome</span></code></pre></div>
+<p>This gives us the locations of all occurrences of <code>ATG</code> in the yeast genome.</p>
+</div>
+<div id="cds-genes-transcripts" class="section level3">
+<h3 class="hasAnchor">
+<a href="#cds-genes-transcripts" class="anchor"></a>CDS, Genes, transcripts</h3>
+<p>Model organism genomes and transcriptomes are catalogued at UCSC and Ensembl. The UCSC catalog is attached and used as follows:</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">TxDb.Scerevisiae.UCSC.sacCer3.sgdGene</span><span class="op">)</span>
+<span class="co">#&gt; Loading required package: GenomicFeatures</span>
+<span class="co">#&gt; Loading required package: AnnotationDbi</span>
+<span class="co">#&gt; Loading required package: Biobase</span>
+<span class="co">#&gt; Welcome to Bioconductor</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;     Vignettes contain introductory material; view with</span>
+<span class="co">#&gt;     'browseVignettes()'. To cite Bioconductor, see</span>
+<span class="co">#&gt;     'citation("Biobase")', and for packages 'citation("pkgname")'.</span>
+<span class="va">ytx</span> <span class="op">=</span> <span class="va">TxDb.Scerevisiae.UCSC.sacCer3.sgdGene</span>
+<span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">ytx</span><span class="op">)</span>
+<span class="co">#&gt; [1] "TxDb"</span>
+<span class="co">#&gt; attr(,"package")</span>
+<span class="co">#&gt; [1] "GenomicFeatures"</span>
+<span class="va">ytx</span>
+<span class="co">#&gt; TxDb object:</span>
+<span class="co">#&gt; # Db type: TxDb</span>
+<span class="co">#&gt; # Supporting package: GenomicFeatures</span>
+<span class="co">#&gt; # Data source: UCSC</span>
+<span class="co">#&gt; # Genome: sacCer3</span>
+<span class="co">#&gt; # Organism: Saccharomyces cerevisiae</span>
+<span class="co">#&gt; # Taxonomy ID: 4932</span>
+<span class="co">#&gt; # UCSC Table: sgdGene</span>
+<span class="co">#&gt; # Resource URL: http://genome.ucsc.edu/</span>
+<span class="co">#&gt; # Type of Gene ID: Name of canonical transcript in cluster</span>
+<span class="co">#&gt; # Full dataset: yes</span>
+<span class="co">#&gt; # miRBase build ID: NA</span>
+<span class="co">#&gt; # transcript_nrow: 6692</span>
+<span class="co">#&gt; # exon_nrow: 7034</span>
+<span class="co">#&gt; # cds_nrow: 7034</span>
+<span class="co">#&gt; # Db created by: GenomicFeatures package from Bioconductor</span>
+<span class="co">#&gt; # Creation time: 2015-10-07 18:20:42 +0000 (Wed, 07 Oct 2015)</span>
+<span class="co">#&gt; # GenomicFeatures version at creation time: 1.21.30</span>
+<span class="co">#&gt; # RSQLite version at creation time: 1.0.0</span>
+<span class="co">#&gt; # DBSCHEMAVERSION: 1.1</span></code></pre></div>
+<p>As before, we can discover available functions for working with such catalogues:</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/methods.html">methods</a></span><span class="op">(</span>class<span class="op">=</span><span class="st">"TxDb"</span><span class="op">)</span>
+<span class="co">#&gt;  [1] $                      $&lt;-                    annotatedDataFrameFrom</span>
+<span class="co">#&gt;  [4] as.list                asBED                  asGFF                 </span>
+<span class="co">#&gt;  [7] assayData              assayData&lt;-            cds                   </span>
+<span class="co">#&gt; [10] cdsBy                  cdsByOverlaps          coerce                </span>
+<span class="co">#&gt; [13] columns                combine                contents              </span>
+<span class="co">#&gt; [16] dbconn                 dbfile                 dbInfo                </span>
+<span class="co">#&gt; [19] dbmeta                 dbschema               disjointExons         </span>
+<span class="co">#&gt; [22] distance               exons                  exonsBy               </span>
+<span class="co">#&gt; [25] exonsByOverlaps        ExpressionSet          extractUpstreamSeqs   </span>
+<span class="co">#&gt; [28] featureNames           featureNames&lt;-         fiveUTRsByTranscript  </span>
+<span class="co">#&gt; [31] genes                  initialize             intronsByTranscript   </span>
+<span class="co">#&gt; [34] isActiveSeq            isActiveSeq&lt;-          isNA                  </span>
+<span class="co">#&gt; [37] keys                   keytypes               mapIds                </span>
+<span class="co">#&gt; [40] mapIdsToRanges         mappedkeys             mapRangesToIds        </span>
+<span class="co">#&gt; [43] mapToTranscripts       metadata               microRNAs             </span>
+<span class="co">#&gt; [46] nhit                   organism               promoters             </span>
+<span class="co">#&gt; [49] revmap                 sample                 sampleNames           </span>
+<span class="co">#&gt; [52] sampleNames&lt;-          saveDb                 select                </span>
+<span class="co">#&gt; [55] seqinfo                seqinfo&lt;-              seqlevels&lt;-           </span>
+<span class="co">#&gt; [58] seqlevels0             show                   species               </span>
+<span class="co">#&gt; [61] storageMode            storageMode&lt;-          taxonomyId            </span>
+<span class="co">#&gt; [64] threeUTRsByTranscript  transcripts            transcriptsBy         </span>
+<span class="co">#&gt; [67] transcriptsByOverlaps  tRNAs                  updateObject          </span>
+<span class="co">#&gt; see '?methods' for accessing help and source code</span></code></pre></div>
 <ul>
 <li>BSgenome, EnsDb, AnnotationHub</li>
 </ul>
+</div>
 </div>
 <div id="the-cancer-genome-atlas-a-paradigm-of-federated-multiomics" class="section level2">
 <h2 class="hasAnchor">
