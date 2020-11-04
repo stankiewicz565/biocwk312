@@ -62,6 +62,7 @@ paste(s, s, sep="")
 ```
 - random number generation
 ```{r ill3}
+set.seed(1234) # setting a seed for reproducibility
 x = rnorm(5)
 x
 ```
@@ -106,8 +107,109 @@ simpdf = data.frame(x,y)
 ggplot(simpdf, aes(x=x, y=y)) + geom_point()
 ```
 
+### Summary: strategies for bioinformatics with R/Bioconductor
 
-## Basics of genome annotation: reference genomes, transcriptomes, ...
+These questions should be 
+considered in preparing
+to work with R for bioinformatics analysis.
+
+- What question do I want to answer with this analysis?
+- What data am I going to use?  Have I clearly documented
+the production of the data, including its origin, quality
+assessment, data editing, sample annotations?
+- What is a clear verbal description of the analysis to
+be performed?
+- What R/Bioconductor packages can be used to conduct
+the analysis?
+- If the analysis consists of a sequence of steps, should
+I save interim results in case an error occurs somewhere
+downstream?
+- What steps will I take to ensure that the analysis is
+reproducible by independent parties?
+
+The Bioconductor software/analysis/documentation ecosystem
+can help with answers to these questions.  There are many
+facets to the ecosystem.  Bioconductor users form an
+active community and post questions and answers at
+`support.bioconductor.org`.  You can often get input
+on answers to some of the questions above by browsing and
+searching that site and posting your own questions.
+
+
+## Basics of genome annotation: reference genomes, transcriptomes, functional annotation
+
+### Reference genomic sequence
+
+The `BSgenome` package defines infrastructure that supports compact
+representation of genomic sequences.  We'll have a look at
+a recent reference build for baker's yeast.  For this to work,
+we need to know the name of the package that provides the
+genomic sequence, install it, and use appropriate functions
+to work with the BSgenome representation.
+
+```{r doye1}
+# BiocManager::install("BSgenome.Scerevisiae.UCSC.sacCer3") if necessary
+library(BSgenome)
+library(BSgenome.Scerevisiae.UCSC.sacCer3)
+yeastg = BSgenome.Scerevisiae.UCSC.sacCer3
+yeastg
+```
+Evaluation of `yeastg` in the R session produces a brief report on the
+BSgenome representation.  We can look at chromosomal sequence with
+```{r lkseq}
+yeastg$chrI
+```
+
+What we call `yeastg` is a Bioconductor representation of the
+genome of a model organism.  Similar representations are available
+for more species:
+```{r lkagen}
+length(available.genomes())
+head(available.genomes())
+```
+
+Each of the genomes listed in the output of `available_genomes()` can be obtained by
+installing the associated package, attaching the package and then operating
+with the eponymous object, as in `yeastg = BSgenome.Scerevisiae.UCSC.sacCer3`.
+All of the objects representing the reference genomes of model organisms
+are instance of a 'class'.
+
+```{r lkcla}
+class(yeastg)
+```
+
+One way of discovering the family of functions that have
+been defined to work with instances of a class is to use
+the `methods` function:
+```{r lkme}
+methods(class="BSgenome")
+```
+
+Let's try one:
+```{r lkvma}
+atgm = vmatchPattern("ATG", yeastg)
+atgm
+```
+This gives us the locations of all occurrences of `ATG` in the yeast genome.
+
+### CDS, Genes, transcripts
+
+Model organism genomes and transcriptomes are catalogued at UCSC
+and Ensembl.  The UCSC catalog is attached and used as follows:
+```{r lktxdb}
+library(TxDb.Scerevisiae.UCSC.sacCer3.sgdGene)
+ytx = TxDb.Scerevisiae.UCSC.sacCer3.sgdGene
+class(ytx)
+ytx
+```
+As before, we can discover available functions for working
+with such catalogues:
+```{r lkcat}
+methods(class="TxDb")
+```
+
+
+
 
 - BSgenome, EnsDb, AnnotationHub
 

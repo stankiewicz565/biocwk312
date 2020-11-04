@@ -1,6 +1,6 @@
 Package: biocwk312
 Title: Workshop intro for Bioconductor 3.12.
-Version: 0.1.5
+Version: 0.1.6
 Authors@R: 
     person(given = "Vince",
            family = "Carey",
@@ -20,7 +20,10 @@ Suggests:
     rmarkdown,
     pkgdown,
     DT,
-    ggplot2
+    ggplot2,
+    BSgenome,
+    BSgenome.Scerevisiae.UCSC.sacCer3,
+    TxDb.Scerevisiae.UCSC.sacCer3.sgdGene
 Imports: TnT,
     GenomicRanges,
     ensembldb,

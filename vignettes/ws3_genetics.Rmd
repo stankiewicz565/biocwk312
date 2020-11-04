@@ -3,7 +3,7 @@ title: "WS3 Human disease genetics with Bioconductor 3.12"
 author: Vince Carey^[stvjc@channing.harvard.edu]
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{WS2 Human disease genetics with Bioconductor 3.12}
+  %\VignetteIndexEntry{WS3 Human disease genetics with Bioconductor 3.12}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 bibliography: biocwk312.bib
