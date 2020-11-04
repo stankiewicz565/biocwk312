@@ -37,7 +37,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">biocwk312</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.5</span>
       </span>
     </div>
 
@@ -113,9 +113,83 @@
 <div id="prerequisites-and-motivating-examples" class="section level1">
 <h1 class="hasAnchor">
 <a href="#prerequisites-and-motivating-examples" class="anchor"></a>Prerequisites and motivating examples</h1>
+<div id="pre-requisites" class="section level2">
+<h2 class="hasAnchor">
+<a href="#pre-requisites" class="anchor"></a>Pre-requisites</h2>
+<ul>
+<li>Basic knowledge of R syntax</li>
+<li>Familiarity with Rstudio</li>
+<li>Basic understanding of modern genomics. For example, the distinction between whole genome sequencing and RNA-seq should be clear.</li>
+<li>Basic familiarity with the concepts of statistical analysis, such as the definition of the t-test for comparing sample means, the interpretation of histograms. An understanding of experimental design is helpful.</li>
+<li>Optional readings:
+<ul>
+<li><a href="https://cran.r-project.org/doc/manuals/r-release/R-intro.pdf">An introduction to R</a></li>
+<li>
+<a href="https://education.rstudio.com/learn/beginner/">The beginners page</a> at the Rstudio education portal.</li>
+<li>
+<a href="https://www.datacamp.com/community/tutorials/intro-bioconductor">An introduction to Bioconductor</a> at DataCamp.</li>
+</ul>
+</li>
+</ul>
+</div>
 <div id="programming-and-package-use-with-r-4-0-3" class="section level2">
 <h2 class="hasAnchor">
 <a href="#programming-and-package-use-with-r-4-0-3" class="anchor"></a>Programming and package use with R 4.0.3</h2>
+<p>R is a programming language focusing on activities important in statistical data analysis, but it is often thought of more as an interactive environment for working with data. This concept of “environment” will become clearer as we use R to perform progressively mode complex tasks.</p>
+<div id="simple-illustrations" class="section level3">
+<h3 class="hasAnchor">
+<a href="#simple-illustrations" class="anchor"></a>Simple illustrations</h3>
+<ul>
+<li>simple arithmetic</li>
+</ul>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="op">(</span><span class="fl">7</span><span class="op">+</span><span class="fl">5</span><span class="op">)</span><span class="op">/</span><span class="op">(</span><span class="fl">3</span><span class="op">*</span><span class="fl">6</span><span class="op">)</span>
+<span class="co">#&gt; [1] 0.6666667</span></code></pre></div>
+<ul>
+<li>assignment; string definitions and operations</li>
+</ul>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">s</span> <span class="op">=</span> <span class="st">"abc"</span>
+<span class="va">s</span>
+<span class="co">#&gt; [1] "abc"</span>
+<span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="va">s</span>, <span class="va">s</span>, sep<span class="op">=</span><span class="st">""</span><span class="op">)</span>
+<span class="co">#&gt; [1] "abcabc"</span></code></pre></div>
+<ul>
+<li>random number generation</li>
+</ul>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">x</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span>
+<span class="va">x</span>
+<span class="co">#&gt; [1] -1.30410309  0.29917014 -0.07421241 -1.73522504 -0.99578690</span></code></pre></div>
+<ul>
+<li>data visualization</li>
+</ul>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">y</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">x</span>,<span class="va">y</span><span class="op">)</span></code></pre></div>
+<p><img src="ws1_intro_files/figure-html/ill4-1.png" width="700"></p>
+</div>
+<div id="making-new-variables" class="section level3">
+<h3 class="hasAnchor">
+<a href="#making-new-variables" class="anchor"></a>Making new variables</h3>
+<p>In the example <code>s = "abc"</code>, we formed a <em>string constant</em> by enclosing <code>abc</code> in quotes and <em>assigned</em> it to the variable <code>s</code>. This operation could also be written <code>s &lt;- "abc"</code> or <code>"abc" -&gt; s</code>.</p>
+</div>
+<div id="calling-functions" class="section level3">
+<h3 class="hasAnchor">
+<a href="#calling-functions" class="anchor"></a>Calling functions</h3>
+<p>The most common syntax for working with R was illustrated in the string operation illustration: <code><a href="https://rdrr.io/r/base/paste.html">paste(s, s, sep="")</a></code>. This operation took the string variables <code>s</code> and concatenated it with itself. The additional function argument <code>sep=""</code> arranges that the concatenation is to occur without any intervening text.</p>
+<p>The examples illustrate the use of two more functions: <code>rnorm</code>, and <code>plot</code>.</p>
+</div>
+<div id="packages" class="section level3">
+<h3 class="hasAnchor">
+<a href="#packages" class="anchor"></a>Packages</h3>
+<p>The family of functions and data available in an R session depends upon the collection of packages attached in the session. Packages are used to collect related functions together with their documentation. We can add to the collection of functions available for plotting, and use the ggplot approach to designing visualizations, as follows.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
+<span class="va">simpdf</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="va">x</span>,<span class="va">y</span><span class="op">)</span>
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">simpdf</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">x</span>, y<span class="op">=</span><span class="va">y</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<p><img src="ws1_intro_files/figure-html/dogg-1.png" width="700"></p>
+</div>
 </div>
 <div id="basics-of-genome-annotation-reference-genomes-transcriptomes" class="section level2">
 <h2 class="hasAnchor">
