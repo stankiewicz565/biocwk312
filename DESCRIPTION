@@ -19,7 +19,8 @@ Suggests:
     knitr,
     rmarkdown,
     pkgdown,
-    DT
+    DT,
+    ggplot2
 Imports: TnT,
     GenomicRanges,
     ensembldb,
