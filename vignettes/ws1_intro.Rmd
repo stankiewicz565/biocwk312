@@ -18,6 +18,12 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+suppressPackageStartupMessages({
+library(ggplot2)
+library(BSgenome)
+library(BSgenome.Scerevisiae.UCSC.sacCer3)
+library(TxDb.Scerevisiae.UCSC.sacCer3.sgdGene)
+})
 ```
 
 
