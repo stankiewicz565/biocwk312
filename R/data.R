@@ -18,3 +18,19 @@
 #' @docType data
 #' @format tibble
 "lamb_main_20201101"
+
+#' an hg19-based data.frame with gene addresses
+#' @docType data
+#' @note Faster response than GRanges/genes on TxDb.  `genes_df_hg19[sym,]` gives one row with seqnames, start, end, etc.
+#' @format data.frame
+"genes_df_hg19"
+
+#' a TnT gene track with gene symbols as display_id, hg19
+#' @docType data
+#' @format TnT GeneTrack
+"tnt_gt_sym"
+
+#' a TnT transcript track confined to chr14, hg19
+#' @docType data
+#' @format TnT GeneTrack
+"tnt_txtr_14"
