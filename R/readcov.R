@@ -38,7 +38,7 @@ read_covg_by_symbol = function(sym, bamf, radius=0) {
 #' }
 #' @export
 linetrack_covg_by_symbol = function(sym, bamf, radius=0, ...) {
-  myr = read_covg_by_symbol(sym, bamf, radius=0)
+  myr = read_covg_by_symbol(sym, bamf, radius=radius)
 #  interp = rep(runValue(myr), runLength(myr))
 #  addrs = seq_len(length(interp))
 #  left = min(which(interp>0))

@@ -23,6 +23,8 @@ library(ggplot2)
 library(BSgenome)
 library(BSgenome.Scerevisiae.UCSC.sacCer3)
 library(TxDb.Scerevisiae.UCSC.sacCer3.sgdGene)
+library(TxDb.Hsapiens.UCSC.hg19.knownGene)
+library(AnnotationHub)
 })
 ```
 
@@ -198,7 +200,7 @@ atgm
 ```
 This gives us the locations of all occurrences of `ATG` in the yeast genome.
 
-### CDS, Genes, transcripts
+### The TxDb family
 
 Model organism genomes and transcriptomes are catalogued at UCSC
 and Ensembl.  The UCSC catalog is attached and used as follows:
@@ -213,11 +215,59 @@ with such catalogues:
 ```{r lkcat}
 methods(class="TxDb")
 ```
+To obtain the DNA sequences of all yeast genes, use `getSeq`:
+First, we need the addresses of the genes.  We use a
+special representation called `GRanges`.
+```{r getgadd}
+y_g = genes(ytx)
+y_g
+```
+Now we call `getSeq`:
+```{r dogs}
+getSeq(yeastg, y_g)
+```
+
+For human studies, the same concepts apply.
+```{r lktxhum}
+library(TxDb.Hsapiens.UCSC.hg19.knownGene)
+txdb = TxDb.Hsapiens.UCSC.hg19.knownGene
+transcripts(txdb)
+```
+
+### AnnotationHub example: Epigenetically defined functional annotation 
+
+Finally, the AnnotationHub package defines a database with many
+types of biological annotation.  For our last example in
+this section, we consider how to obtain the ChromHmm
+cell type annotation for diverse cell types.  The
+AnnotationHub can be updated in real time.  We
+obtain an image of the hub, and then "query".
+```{r lklklk}
+library(AnnotationHub)
+ah = AnnotationHub()
+chq = query(ah, "ChromHmm")
+chq
+```
+The result here can be very large and so an abbreviated
+view is dumped.  To learn about the cell types studied,
+we use a technical call that takes advantage of knowledge
+that `mcols` on a query result gives a table of features
+for each resource.
+```{r lkct}
+mcols(chq)["AH46861",]$tags
+head(table(vapply(mcols(chq)[-1,]$tags, 
+   function(x)x[8],  character(1))))
+```
+Now we can acquire the ChromHmm labeling of genomic regions
+for the H1-derived mesenchymal stem cells:
+```{r lksh1}
+h1msc = ah[["AH46861"]]
+h1msc
+table(h1msc$name)
+```
 
 
 
-
-- BSgenome, EnsDb, AnnotationHub
 
 ## The Cancer Genome Atlas, a paradigm of federated multiomics
 
