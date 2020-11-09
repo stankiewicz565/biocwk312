@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>a GRanges derived from the EBI/EMBL GWAS catalog of 1 Nov 2020 — hits_near_ormdl3_trunc10 • biocwk312</title>
+<title>an hg19-based data.frame with gene addresses — genes_df_hg19 • biocwk312</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="a GRanges derived from the EBI/EMBL GWAS catalog of 1 Nov 2020 — hits_near_ormdl3_trunc10" />
-<meta property="og:description" content="a GRanges derived from the EBI/EMBL GWAS catalog of 1 Nov 2020" />
+<meta property="og:title" content="an hg19-based data.frame with gene addresses — genes_df_hg19" />
+<meta property="og:description" content="an hg19-based data.frame with gene addresses" />
 
 
 
@@ -142,26 +142,24 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>a GRanges derived from the EBI/EMBL GWAS catalog of 1 Nov 2020</h1>
+    <h1>an hg19-based data.frame with gene addresses</h1>
     <small class="dont-index">Source: <a href='https://github.com/vjcitn/biocwk312/blob/master/R/data.R'><code>R/data.R</code></a></small>
-    <div class="hidden name"><code>hits_near_ormdl3_trunc10.Rd</code></div>
+    <div class="hidden name"><code>genes_df_hg19.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>a GRanges derived from the EBI/EMBL GWAS catalog of 1 Nov 2020</p>
+    <p>an hg19-based data.frame with gene addresses</p>
     </div>
 
-    <pre class="usage"><span class='va'>hits_near_ormdl3_trunc10</span></pre>
+    <pre class="usage"><span class='va'>genes_df_hg19</span></pre>
 
 
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>GenomicRanges GRanges instance</p>
+    <p>data.frame</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>The 'value' field is the result of <code><a href='https://rdrr.io/r/base/Extremes.html'>pmin(hits_near_ormdl3_trunc10$PVALUE_MLOG,10)</a></code>,
-which is convenient to see variation in significance, which would otherwise be crushed
-down owing to mlog values in the 100s.</p>
+    <p>Faster response than GRanges/genes on TxDb.  <code>genes_df_hg19[sym,]</code> gives one row with seqnames, start, end, etc.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

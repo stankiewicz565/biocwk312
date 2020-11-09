@@ -4,10 +4,19 @@
     <loc>https://vjcitn.github.io/biocwk312/index.html</loc>
   </url>
   <url>
+    <loc>https://vjcitn.github.io/biocwk312/reference/genes_df_hg19.html</loc>
+  </url>
+  <url>
     <loc>https://vjcitn.github.io/biocwk312/reference/hits_near_ormdl3_trunc10.html</loc>
   </url>
   <url>
     <loc>https://vjcitn.github.io/biocwk312/reference/lamb_main_20201101.html</loc>
+  </url>
+  <url>
+    <loc>https://vjcitn.github.io/biocwk312/reference/linetrack_covg_by_symbol.html</loc>
+  </url>
+  <url>
+    <loc>https://vjcitn.github.io/biocwk312/reference/read_covg_by_symbol.html</loc>
   </url>
   <url>
     <loc>https://vjcitn.github.io/biocwk312/reference/reset_color.html</loc>
@@ -17,6 +26,12 @@
   </url>
   <url>
     <loc>https://vjcitn.github.io/biocwk312/reference/reset_tooltip.html</loc>
+  </url>
+  <url>
+    <loc>https://vjcitn.github.io/biocwk312/reference/tnt_gt_sym.html</loc>
+  </url>
+  <url>
+    <loc>https://vjcitn.github.io/biocwk312/reference/tnt_txtr_14.html</loc>
   </url>
   <url>
     <loc>https://vjcitn.github.io/biocwk312/reference/txdata_near_ormdl3.html</loc>

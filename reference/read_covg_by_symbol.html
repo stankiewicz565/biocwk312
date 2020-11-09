@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>a GRanges derived from the EBI/EMBL GWAS catalog of 1 Nov 2020 — hits_near_ormdl3_trunc10 • biocwk312</title>
+<title>produce a coverage RLE given a gene symbol, hg19-based — read_covg_by_symbol • biocwk312</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="a GRanges derived from the EBI/EMBL GWAS catalog of 1 Nov 2020 — hits_near_ormdl3_trunc10" />
-<meta property="og:description" content="a GRanges derived from the EBI/EMBL GWAS catalog of 1 Nov 2020" />
+<meta property="og:title" content="produce a coverage RLE given a gene symbol, hg19-based — read_covg_by_symbol" />
+<meta property="og:description" content="produce a coverage RLE given a gene symbol, hg19-based" />
 
 
 
@@ -142,27 +142,46 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>a GRanges derived from the EBI/EMBL GWAS catalog of 1 Nov 2020</h1>
-    <small class="dont-index">Source: <a href='https://github.com/vjcitn/biocwk312/blob/master/R/data.R'><code>R/data.R</code></a></small>
-    <div class="hidden name"><code>hits_near_ormdl3_trunc10.Rd</code></div>
+    <h1>produce a coverage RLE given a gene symbol, hg19-based</h1>
+    <small class="dont-index">Source: <a href='https://github.com/vjcitn/biocwk312/blob/master/R/readcov.R'><code>R/readcov.R</code></a></small>
+    <div class="hidden name"><code>read_covg_by_symbol.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>a GRanges derived from the EBI/EMBL GWAS catalog of 1 Nov 2020</p>
+    <p>produce a coverage RLE given a gene symbol, hg19-based</p>
     </div>
 
-    <pre class="usage"><span class='va'>hits_near_ormdl3_trunc10</span></pre>
+    <pre class="usage"><span class='fu'>read_covg_by_symbol</span><span class='op'>(</span><span class='va'>sym</span>, <span class='va'>bamf</span>, radius <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span></pre>
 
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>sym</th>
+      <td><p>a gene symbol</p></td>
+    </tr>
+    <tr>
+      <th>bamf</th>
+      <td><p>a path to indexed BAM file</p></td>
+    </tr>
+    <tr>
+      <th>radius</th>
+      <td><p>numeric(1) defaulting to zero, upstream/downstream extra reach</p></td>
+    </tr>
+    </table>
 
-    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
-
-    <p>GenomicRanges GRanges instance</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>The 'value' field is the result of <code><a href='https://rdrr.io/r/base/Extremes.html'>pmin(hits_near_ormdl3_trunc10$PVALUE_MLOG,10)</a></code>,
-which is convenient to see variation in significance, which would otherwise be crushed
-down owing to mlog values in the 100s.</p>
+    <p>Uses <code>genes_df_hg19</code> to find address of gene.</p>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span><span class='op'>(</span><span class='st'>"RNAseqData.HNRNPC.bam.chr14"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='va'>f1</span> <span class='op'>=</span> <span class='fu'>RNAseqData.HNRNPC.bam.chr14</span><span class='fu'>::</span><span class='va'><a href='https://rdrr.io/pkg/RNAseqData.HNRNPC.bam.chr14/man/RNAseqData.HNRNPC.bam.chr14-package.html'>RNAseqData.HNRNPC.bam.chr14_BAMFILES</a></span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span>
+  <span class='fu'>read_covg_by_symbol</span><span class='op'>(</span><span class='st'>"HNRNPC"</span>, <span class='va'>f1</span><span class='op'>)</span>
+<span class='op'>}</span>
+</div><div class='output co'>#&gt; integer-Rle of length 107349540 with 1944 runs
+#&gt;   Lengths: 21677346        5        2        1 ...        1       13 85611935
+#&gt;   Values :        0        1        2        3 ...        2        1        0</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
