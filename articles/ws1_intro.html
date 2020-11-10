@@ -37,7 +37,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">biocwk312</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.9</span>
       </span>
     </div>
 
@@ -287,9 +287,9 @@
 <span class="co">#&gt;   seqinfo: 17 sequences from an unspecified genome</span></code></pre></div>
 <p>This gives us the locations of all occurrences of <code>ATG</code> in the yeast genome.</p>
 </div>
-<div id="cds-genes-transcripts" class="section level3">
+<div id="the-txdb-family" class="section level3">
 <h3 class="hasAnchor">
-<a href="#cds-genes-transcripts" class="anchor"></a>CDS, Genes, transcripts</h3>
+<a href="#the-txdb-family" class="anchor"></a>The TxDb family</h3>
 <p>Model organism genomes and transcriptomes are catalogued at UCSC and Ensembl. The UCSC catalog is attached and used as follows:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">TxDb.Scerevisiae.UCSC.sacCer3.sgdGene</span><span class="op">)</span>
@@ -346,9 +346,174 @@
 <span class="co">#&gt; [64] threeUTRsByTranscript  transcripts            transcriptsBy         </span>
 <span class="co">#&gt; [67] transcriptsByOverlaps  tRNAs                  updateObject          </span>
 <span class="co">#&gt; see '?methods' for accessing help and source code</span></code></pre></div>
-<ul>
-<li>BSgenome, EnsDb, AnnotationHub</li>
-</ul>
+<p>To obtain the DNA sequences of all yeast genes, use <code>getSeq</code>: First, we need the addresses of the genes. We use a special representation called <code>GRanges</code>.</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">y_g</span> <span class="op">=</span> <span class="fu">genes</span><span class="op">(</span><span class="va">ytx</span><span class="op">)</span>
+<span class="va">y_g</span>
+<span class="co">#&gt; GRanges object with 6534 ranges and 1 metadata column:</span>
+<span class="co">#&gt;             seqnames        ranges strand |     gene_id</span>
+<span class="co">#&gt;                &lt;Rle&gt;     &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt;</span>
+<span class="co">#&gt;       Q0010     chrM     3952-4415      + |       Q0010</span>
+<span class="co">#&gt;       Q0032     chrM   11667-11957      + |       Q0032</span>
+<span class="co">#&gt;       Q0055     chrM   13818-26701      + |       Q0055</span>
+<span class="co">#&gt;       Q0075     chrM   24156-25255      + |       Q0075</span>
+<span class="co">#&gt;       Q0080     chrM   27666-27812      + |       Q0080</span>
+<span class="co">#&gt;         ...      ...           ...    ... .         ...</span>
+<span class="co">#&gt;     YPR200C   chrXVI 939279-939671      - |     YPR200C</span>
+<span class="co">#&gt;     YPR201W   chrXVI 939922-941136      + |     YPR201W</span>
+<span class="co">#&gt;     YPR202W   chrXVI 943032-944188      + |     YPR202W</span>
+<span class="co">#&gt;   YPR204C-A   chrXVI 946856-947338      - |   YPR204C-A</span>
+<span class="co">#&gt;     YPR204W   chrXVI 944603-947701      + |     YPR204W</span>
+<span class="co">#&gt;   -------</span>
+<span class="co">#&gt;   seqinfo: 17 sequences (1 circular) from sacCer3 genome</span></code></pre></div>
+<p>Now we call <code>getSeq</code>:</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/BSgenome/man/getSeq-methods.html">getSeq</a></span><span class="op">(</span><span class="va">yeastg</span>, <span class="va">y_g</span><span class="op">)</span>
+<span class="co">#&gt; DNAStringSet object of length 6534:</span>
+<span class="co">#&gt;        width seq                                            names               </span>
+<span class="co">#&gt;    [1]   464 ATATATTATATTATATTTTTAT...AATATACTTTATATTTTATAA Q0010</span>
+<span class="co">#&gt;    [2]   291 ATATTAATAATATATATATTAT...AAGTTTTTATATTCATTATAA Q0032</span>
+<span class="co">#&gt;    [3] 12884 ATGGTACAAAGATGATTATATT...ACACCAGCTGTACAATCTTAA Q0055</span>
+<span class="co">#&gt;    [4]  1100 ATATTAATATTATTAATAATAA...CATTATAACAATATCGAATAA Q0075</span>
+<span class="co">#&gt;    [5]   147 ATGCCACAATTAGTTCCATTTT...TTATTTATTTCTAAATTATAA Q0080</span>
+<span class="co">#&gt;    ...   ... ...</span>
+<span class="co">#&gt; [6530]   393 ATGGTAAGTTTCATAACGTCTA...AAATTGATTGTTAGTGGTTGA YPR200C</span>
+<span class="co">#&gt; [6531]  1215 ATGTCAGAAGATCAAAAAAGTG...ATATGGAACAATAGAAATTAA YPR201W</span>
+<span class="co">#&gt; [6532]  1157 ATGGAAATTGAAAACGAACGTA...CATGTGTGCTGCCCAAGTTGA YPR202W</span>
+<span class="co">#&gt; [6533]   483 ATGATGCCTGCTAAACTGCAGC...CAGCATTCTCTCCACAGCTAG YPR204C-A</span>
+<span class="co">#&gt; [6534]  3099 ATGGCAGACACACCCTCTGTGG...AGCAGAGAAGTTGGAGAGTGA YPR204W</span></code></pre></div>
+<p>For human studies, the same concepts apply.</p>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">TxDb.Hsapiens.UCSC.hg19.knownGene</span><span class="op">)</span>
+<span class="va">txdb</span> <span class="op">=</span> <span class="va">TxDb.Hsapiens.UCSC.hg19.knownGene</span>
+<span class="fu">transcripts</span><span class="op">(</span><span class="va">txdb</span><span class="op">)</span>
+<span class="co">#&gt; GRanges object with 82960 ranges and 2 metadata columns:</span>
+<span class="co">#&gt;                 seqnames        ranges strand |     tx_id     tx_name</span>
+<span class="co">#&gt;                    &lt;Rle&gt;     &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt; &lt;character&gt;</span>
+<span class="co">#&gt;       [1]           chr1   11874-14409      + |         1  uc001aaa.3</span>
+<span class="co">#&gt;       [2]           chr1   11874-14409      + |         2  uc010nxq.1</span>
+<span class="co">#&gt;       [3]           chr1   11874-14409      + |         3  uc010nxr.1</span>
+<span class="co">#&gt;       [4]           chr1   69091-70008      + |         4  uc001aal.1</span>
+<span class="co">#&gt;       [5]           chr1 321084-321115      + |         5  uc001aaq.2</span>
+<span class="co">#&gt;       ...            ...           ...    ... .       ...         ...</span>
+<span class="co">#&gt;   [82956] chrUn_gl000237        1-2686      - |     82956  uc011mgu.1</span>
+<span class="co">#&gt;   [82957] chrUn_gl000241   20433-36875      - |     82957  uc011mgv.2</span>
+<span class="co">#&gt;   [82958] chrUn_gl000243   11501-11530      + |     82958  uc011mgw.1</span>
+<span class="co">#&gt;   [82959] chrUn_gl000243   13608-13637      + |     82959  uc022brq.1</span>
+<span class="co">#&gt;   [82960] chrUn_gl000247     5787-5816      - |     82960  uc022brr.1</span>
+<span class="co">#&gt;   -------</span>
+<span class="co">#&gt;   seqinfo: 93 sequences (1 circular) from hg19 genome</span></code></pre></div>
+</div>
+<div id="annotationhub-example-epigenetically-defined-functional-annotation" class="section level3">
+<h3 class="hasAnchor">
+<a href="#annotationhub-example-epigenetically-defined-functional-annotation" class="anchor"></a>AnnotationHub example: Epigenetically defined functional annotation</h3>
+<p>Finally, the AnnotationHub package defines a database with many types of biological annotation. For our last example in this section, we consider how to obtain the ChromHmm cell type annotation for diverse cell types. The AnnotationHub can be updated in real time. We obtain an image of the hub, and then “query”.</p>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">AnnotationHub</span><span class="op">)</span>
+<span class="va">ah</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/AnnotationHub/man/AnnotationHub-class.html">AnnotationHub</a></span><span class="op">(</span><span class="op">)</span>
+<span class="co">#&gt; using temporary cache /tmp/Rtmp8CxdMp/BiocFileCache</span>
+<span class="co">#&gt; snapshotDate(): 2020-10-27</span>
+<span class="va">chq</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/AnnotationHub/man/AnnotationHub-class.html">query</a></span><span class="op">(</span><span class="va">ah</span>, <span class="st">"ChromHmm"</span><span class="op">)</span>
+<span class="va">chq</span>
+<span class="co">#&gt; AnnotationHub with 128 records</span>
+<span class="co">#&gt; # snapshotDate(): 2020-10-27</span>
+<span class="co">#&gt; # $dataprovider: BroadInstitute, UCSC</span>
+<span class="co">#&gt; # $species: Homo sapiens</span>
+<span class="co">#&gt; # $rdataclass: GRanges</span>
+<span class="co">#&gt; # additional mcols(): taxonomyid, genome, description,</span>
+<span class="co">#&gt; #   coordinate_1_based, maintainer, rdatadateadded, preparerclass, tags,</span>
+<span class="co">#&gt; #   rdatapath, sourceurl, sourcetype </span>
+<span class="co">#&gt; # retrieve records with, e.g., 'object[["AH5202"]]' </span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;             title                             </span>
+<span class="co">#&gt;   AH5202  | Broad ChromHMM                    </span>
+<span class="co">#&gt;   AH46856 | E001_15_coreMarks_mnemonics.bed.gz</span>
+<span class="co">#&gt;   AH46857 | E002_15_coreMarks_mnemonics.bed.gz</span>
+<span class="co">#&gt;   AH46858 | E003_15_coreMarks_mnemonics.bed.gz</span>
+<span class="co">#&gt;   AH46859 | E004_15_coreMarks_mnemonics.bed.gz</span>
+<span class="co">#&gt;   ...       ...                               </span>
+<span class="co">#&gt;   AH46978 | E125_15_coreMarks_mnemonics.bed.gz</span>
+<span class="co">#&gt;   AH46979 | E126_15_coreMarks_mnemonics.bed.gz</span>
+<span class="co">#&gt;   AH46980 | E127_15_coreMarks_mnemonics.bed.gz</span>
+<span class="co">#&gt;   AH46981 | E128_15_coreMarks_mnemonics.bed.gz</span>
+<span class="co">#&gt;   AH46982 | E129_15_coreMarks_mnemonics.bed.gz</span></code></pre></div>
+<p>The result here can be very large and so an abbreviated view is dumped. To learn about the cell types studied, we use a technical call that takes advantage of knowledge that <code>mcols</code> on a query result gives a table of features for each resource.</p>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">mcols</span><span class="op">(</span><span class="va">chq</span><span class="op">)</span><span class="op">[</span><span class="st">"AH46861"</span>,<span class="op">]</span><span class="op">$</span><span class="va">tags</span>
+<span class="co">#&gt; $AH46861</span>
+<span class="co">#&gt; [1] "EpigenomeRoadMap"                  "chromhmmSegmentations"            </span>
+<span class="co">#&gt; [3] "ChmmModels"                        "coreMarks"                        </span>
+<span class="co">#&gt; [5] "E006"                              "ES-deriv"                         </span>
+<span class="co">#&gt; [7] "ESDR.H1.MSC"                       "H1 Derived Mesenchymal Stem Cells"</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">vapply</a></span><span class="op">(</span><span class="fu">mcols</span><span class="op">(</span><span class="va">chq</span><span class="op">)</span><span class="op">[</span><span class="op">-</span><span class="fl">1</span>,<span class="op">]</span><span class="op">$</span><span class="va">tags</span>, 
+   <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="va">x</span><span class="op">[</span><span class="fl">8</span><span class="op">]</span>,  <span class="fu"><a href="https://rdrr.io/r/base/character.html">character</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;           A549 EtOH 0.02pct Lung Carcinoma Cell Line </span>
+<span class="co">#&gt;                                                    1 </span>
+<span class="co">#&gt; Adipose Derived Mesenchymal Stem Cell Cultured Cells </span>
+<span class="co">#&gt;                                                    1 </span>
+<span class="co">#&gt;                                       Adipose Nuclei </span>
+<span class="co">#&gt;                                                    1 </span>
+<span class="co">#&gt;                                                Aorta </span>
+<span class="co">#&gt;                                                    1 </span>
+<span class="co">#&gt;  Bone Marrow Derived Cultured Mesenchymal Stem Cells </span>
+<span class="co">#&gt;                                                    1 </span>
+<span class="co">#&gt;                                  Brain Angular Gyrus </span>
+<span class="co">#&gt;                                                    1</span></code></pre></div>
+<p>Now we can acquire the ChromHmm labeling of genomic regions for the H1-derived mesenchymal stem cells:</p>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">h1msc</span> <span class="op">=</span> <span class="va">ah</span><span class="op">[[</span><span class="st">"AH46861"</span><span class="op">]</span><span class="op">]</span>
+<span class="co">#&gt; downloading 1 resources</span>
+<span class="co">#&gt; retrieving 1 resource</span>
+<span class="co">#&gt; loading from cache</span>
+<span class="va">h1msc</span>
+<span class="co">#&gt; GRanges object with 538000 ranges and 4 metadata columns:</span>
+<span class="co">#&gt;            seqnames            ranges strand |        abbr                name</span>
+<span class="co">#&gt;               &lt;Rle&gt;         &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt;         &lt;character&gt;</span>
+<span class="co">#&gt;        [1]    chr10           1-93200      * |    15_Quies       Quiescent/Low</span>
+<span class="co">#&gt;        [2]    chr10       93201-95200      * |      5_TxWk  Weak transcription</span>
+<span class="co">#&gt;        [3]    chr10       95201-95400      * |  8_ZNF/Rpts ZNF genes &amp; repeats</span>
+<span class="co">#&gt;        [4]    chr10      95401-119400      * |    15_Quies       Quiescent/Low</span>
+<span class="co">#&gt;        [5]    chr10     119401-119600      * |       7_Enh           Enhancers</span>
+<span class="co">#&gt;        ...      ...               ...    ... .         ...                 ...</span>
+<span class="co">#&gt;   [537996]     chrY 59027601-59027800      * |  8_ZNF/Rpts ZNF genes &amp; repeats</span>
+<span class="co">#&gt;   [537997]     chrY 59027801-59029000      * |       9_Het     Heterochromatin</span>
+<span class="co">#&gt;   [537998]     chrY 59029001-59029200      * |  8_ZNF/Rpts ZNF genes &amp; repeats</span>
+<span class="co">#&gt;   [537999]     chrY 59029201-59033400      * |       9_Het     Heterochromatin</span>
+<span class="co">#&gt;   [538000]     chrY 59033401-59373400      * |    15_Quies       Quiescent/Low</span>
+<span class="co">#&gt;                   color_name  color_code</span>
+<span class="co">#&gt;                  &lt;character&gt; &lt;character&gt;</span>
+<span class="co">#&gt;        [1]             White     #FFFFFF</span>
+<span class="co">#&gt;        [2]         DarkGreen     #006400</span>
+<span class="co">#&gt;        [3] Medium Aquamarine     #66CDAA</span>
+<span class="co">#&gt;        [4]             White     #FFFFFF</span>
+<span class="co">#&gt;        [5]            Yellow     #FFFF00</span>
+<span class="co">#&gt;        ...               ...         ...</span>
+<span class="co">#&gt;   [537996] Medium Aquamarine     #66CDAA</span>
+<span class="co">#&gt;   [537997]     PaleTurquoise     #8A91D0</span>
+<span class="co">#&gt;   [537998] Medium Aquamarine     #66CDAA</span>
+<span class="co">#&gt;   [537999]     PaleTurquoise     #8A91D0</span>
+<span class="co">#&gt;   [538000]             White     #FFFFFF</span>
+<span class="co">#&gt;   -------</span>
+<span class="co">#&gt;   seqinfo: 298 sequences (2 circular) from hg19 genome</span>
+<span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">h1msc</span><span class="op">$</span><span class="va">name</span><span class="op">)</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;                 Active TSS          Bivalent Enhancer </span>
+<span class="co">#&gt;                      16526                      14167 </span>
+<span class="co">#&gt;        Bivalent/Poised TSS                  Enhancers </span>
+<span class="co">#&gt;                       1905                      98782 </span>
+<span class="co">#&gt;        Flanking Active TSS  Flanking Bivalent TSS/Enh </span>
+<span class="co">#&gt;                      18643                       4990 </span>
+<span class="co">#&gt;            Genic enhancers            Heterochromatin </span>
+<span class="co">#&gt;                      29466                      45747 </span>
+<span class="co">#&gt;              Quiescent/Low         Repressed PolyComb </span>
+<span class="co">#&gt;                      75063                      24125 </span>
+<span class="co">#&gt;       Strong transcription Transcr. at gene 5' and 3' </span>
+<span class="co">#&gt;                      39066                       2292 </span>
+<span class="co">#&gt;    Weak Repressed PolyComb         Weak transcription </span>
+<span class="co">#&gt;                      40779                     115876 </span>
+<span class="co">#&gt;        ZNF genes &amp; repeats </span>
+<span class="co">#&gt;                      10573</span></code></pre></div>
 </div>
 </div>
 <div id="the-cancer-genome-atlas-a-paradigm-of-federated-multiomics" class="section level2">
