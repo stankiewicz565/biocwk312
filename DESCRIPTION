@@ -1,6 +1,6 @@
 Package: biocwk312
 Title: Workshop intro for Bioconductor 3.12.
-Version: 0.1.8
+Version: 0.1.9
 Authors@R: 
     person(given = "Vince",
            family = "Carey",
