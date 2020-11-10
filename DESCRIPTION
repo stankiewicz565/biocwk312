@@ -1,6 +1,6 @@
 Package: biocwk312
 Title: Workshop intro for Bioconductor 3.12.
-Version: 0.1.9
+Version: 0.1.10
 Authors@R: 
     person(given = "Vince",
            family = "Carey",
@@ -26,7 +26,8 @@ Suggests:
     TxDb.Scerevisiae.UCSC.sacCer3.sgdGene, 
     TxDb.Hsapiens.UCSC.hg19.knownGene, 
     RNAseqData.HNRNPC.bam.chr14,
-    AnnotationHub
+    AnnotationHub,
+    GenomicAlignments
 Imports: TnT,
     GenomicRanges,
     ensembldb,

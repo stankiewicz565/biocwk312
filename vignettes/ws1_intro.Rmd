@@ -246,7 +246,7 @@ transcripts(txdb)
 We've pre-packaged a slice of the human transcriptome (for chr14) in
 the workshop-based package `biocwk312`.  This slice was massaged
 for visualization by functions in the `TnT` package.
-```{r lkcat}
+```{r lkcat2}
 library(biocwk312)
 library(TnT)
 data(tnt_txtr_14)
