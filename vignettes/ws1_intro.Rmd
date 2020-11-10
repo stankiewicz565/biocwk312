@@ -25,6 +25,9 @@ library(BSgenome.Scerevisiae.UCSC.sacCer3)
 library(TxDb.Scerevisiae.UCSC.sacCer3.sgdGene)
 library(TxDb.Hsapiens.UCSC.hg19.knownGene)
 library(AnnotationHub)
+library(biocwk312)
+library(RNAseqData.HNRNPC.bam.chr14)
+library(GenomicAlignments)
 })
 ```
 
@@ -180,7 +183,8 @@ Each of the genomes listed in the output of `available_genomes()` can be obtaine
 installing the associated package, attaching the package and then operating
 with the eponymous object, as in `yeastg = BSgenome.Scerevisiae.UCSC.sacCer3`.
 All of the objects representing the reference genomes of model organisms
-are instance of a 'class'.
+are instances of a 'class'.  Class definitions are used to group related
+data elements together.
 
 ```{r lkcla}
 class(yeastg)
@@ -222,7 +226,10 @@ special representation called `GRanges`.
 y_g = genes(ytx)
 y_g
 ```
-Now we call `getSeq`:
+Instances of the `GRanges` class are used to collect and annotate regions
+defined in genomic coordinates.
+`getSeq(x,y)` extracts nucleotide sequences from a genome `x`, at the
+addresses given by `y`:
 ```{r dogs}
 getSeq(yeastg, y_g)
 ```
@@ -233,6 +240,59 @@ library(TxDb.Hsapiens.UCSC.hg19.knownGene)
 txdb = TxDb.Hsapiens.UCSC.hg19.knownGene
 transcripts(txdb)
 ```
+
+### Using a transcript catalog to visualize RNA-seq data
+
+We've pre-packaged a slice of the human transcriptome (for chr14) in
+the workshop-based package `biocwk312`.  This slice was massaged
+for visualization by functions in the `TnT` package.
+```{r lkcat}
+library(biocwk312)
+library(TnT)
+data(tnt_txtr_14)
+tnt_txtr_14
+```
+Bioconductor has a number of packages that supply aligned RNA-seq
+reads in BAM format.  We'll use one that investigated the effects of
+knocking down a gene called HNRNPC in HeLa cells.
+```{r lkrnah}
+library(RNAseqData.HNRNPC.bam.chr14)
+```
+A character vector provides the paths to the BAM files:
+```{r lkbf1}
+length(RNAseqData.HNRNPC.bam.chr14_BAMFILES)
+RNAseqData.HNRNPC.bam.chr14_BAMFILES[1]
+```
+The 8 files are grouped: the first four are for wild-type cells, the
+next four are for the cells treated to knock down HNRNPC.
+```{r mklab}
+labels = c("wt1", "wt2", "wt3", "wt4", "kd1", "kd2", "kd3", "kd4")
+```
+
+The `GenomicAlignments` package provides functions to
+parse and ingest information from BAM files.
+```{r lkGA}
+library(GenomicAlignments)
+readGAlignments(RNAseqData.HNRNPC.bam.chr14_BAMFILES[1])
+```
+
+We'll now select four of the BAM files to display coverage in
+the vicinity of the knocked-down gene.  The function `linetrack_covg_by_symbol`
+was written specifically to combine information on reads with
+positions of
+genes and transcripts.
+```{r doconf}
+allfi = lapply(c(1,2,5,6), function(x) {
+     curf = RNAseqData.HNRNPC.bam.chr14_BAMFILES[x]
+     linetrack_covg_by_symbol("HNRNPC", curf, 
+             color="gray", radius=3e5, label=labels[x])
+     })
+mytr = c(allfi, tnt_gt_sym, tnt_txtr_14)
+TnTGenome(mytr)
+```
+
+
+
 
 ### AnnotationHub example: Epigenetically defined functional annotation 
 
