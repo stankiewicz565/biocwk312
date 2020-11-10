@@ -25,7 +25,8 @@ Suggests:
     BSgenome.Scerevisiae.UCSC.sacCer3,
     TxDb.Scerevisiae.UCSC.sacCer3.sgdGene, 
     TxDb.Hsapiens.UCSC.hg19.knownGene, 
-    RNAseqData.HNRNPC.bam.chr14
+    RNAseqData.HNRNPC.bam.chr14,
+    AnnotationHub
 Imports: TnT,
     GenomicRanges,
     ensembldb,
