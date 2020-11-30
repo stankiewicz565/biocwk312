@@ -28,6 +28,7 @@ library(AnnotationHub)
 library(biocwk312)
 library(RNAseqData.HNRNPC.bam.chr14)
 library(GenomicAlignments)
+library(curatedTCGAData)
 })
 ```
 
@@ -326,12 +327,48 @@ h1msc
 table(h1msc$name)
 ```
 
-
-
-
 ## The Cancer Genome Atlas, a paradigm of federated multiomics
 
-- TCGA, curatedTCGAData
+The curatedTCGAData package provides convenient access
+to all open data in TCGA.  Here we'll request available
+data on tumor mutation profiles and RNA-seq studies available
+for breast cancer (BRCA).
+
+```{r getBRCA}
+library(curatedTCGAData)
+brca_demo = curatedTCGAData("BRCA", c("Mutation", "RNASeq2GeneNorm"),
+   dry.run=FALSE)
+brca_demo
+```
+
+The MultiAssayExperiment structure is described in a 
+[JCO CCI paper](https://ascopubs.org/doi/full/10.1200/CCI.19.00119).  
+Timestamped tags are provided for each assay type.
+
+```{r lkna}
+names(experiments(brca_demo))
+```
+
+### Mutations in a GRangesList
+
+We can get immediate access to genomic coordinates and
+contents of tumor mutations by coercing the mutations
+component to GRangesList.  There is one list element
+per participant.
+
+```{r lkmut}
+grm = as(experiments(brca_demo)[["BRCA_Mutation-20160128"]], "GRangesList")
+names(grm)[1:3]
+grm[[1]][1:4,1:8]
+```
+
+### A SummarizedExperiment for RNA-seq
+
+```{r lkrnas}
+rnaseq = experiments(brca_demo)[["BRCA_RNASeq2GeneNorm-20160128"]]
+rnaseq
+head(names(colData(rnaseq)))
+```
 
 ## The OSCA book, a paradigm of computable scientific literature
 
