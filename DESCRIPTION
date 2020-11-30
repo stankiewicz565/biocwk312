@@ -28,7 +28,8 @@ Suggests:
     RNAseqData.HNRNPC.bam.chr14,
     AnnotationHub,
     GenomicAlignments,
-    curatedTCGAData
+    curatedTCGAData,
+    RaggedExperiment
 Imports: TnT,
     GenomicRanges,
     ensembldb,
